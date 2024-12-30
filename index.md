@@ -1,16 +1,13 @@
 ---
 layout: default
+title: Mission 2000 Interface
 ---
 
-Text can be **bold**, _italic_, or ~~strikethrough~~.
+This website provides a search interface for the Mission 2000 dataset from National Park Service (NPS). To read more about NPS, the Mission 2000 dataset, the theme used by this website, and other credits or citation information, please visit [here](./about-page.html).
 
-[Link to another page](./about-page.html).
-[Link to a third page](./third-page.html).
-[link to fourth page](fourth-page.html).
+[Link to a third page](./third-page.html) \
+[link to fourth page](fourth-page.html) 
 
-There should be whitespace between paragraphs.
-
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
 
 # Header 1
 
@@ -39,11 +36,8 @@ GitHubPages::Dependencies.gems.each do |gem, version|
 end
 ```
 
-#### Header 4
+#### Credit
 
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
 
 ##### Header 5
 
