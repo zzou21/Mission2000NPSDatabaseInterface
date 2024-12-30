@@ -5,6 +5,8 @@ layout: default
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
 [Link to another page](./about-page.html).
+[Link to a third page](./third-page.html).
+[link to fourth page](fourth-page.html).
 
 There should be whitespace between paragraphs.
 
