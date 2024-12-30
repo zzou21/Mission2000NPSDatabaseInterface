@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Another page
-description: This is just another page
+title: About / Background
+description: About Mission 2000
 ---
 
-## Welcome to another page
+Mission 2000 database was originally created by the National Park Service. The database contains records from Spanish missions of the Pimería Alta.
 
-_yay_
+Link to NPS's original interface: [https://www.nps.gov/tuma/learn/historyculture/mission-2000.htm](https://www.nps.gov/tuma/learn/historyculture/mission-2000.htm)
 
 [back](./)
