@@ -2,7 +2,7 @@ let jsonData = []; // Variable to hold the loaded JSON data
 
 // Fetch JSON data from a file
 function fetchData() {
-  fetch('AuxiliaryDataProcessing/missionData.json') // Replace with the correct path to your JSON file
+  fetch('../AuxiliaryDataProcessing/missionData.json') // Replace with the correct path to your JSON file
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok ' + response.statusText);
