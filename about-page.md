@@ -1,7 +1,7 @@
 ---
 layout: default
 title: About / Background
-permalink: /about
+permalink: /about/
 ---
 
 Mission 2000 database was originally created by the National Park Service. The database contains records from Spanish missions of the Pimería Alta.
