@@ -10,6 +10,7 @@ permalink: /search-interface/
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JSON Search Interface</title>
+    <link rel="stylesheet" href="{{ '/defaultStyle.css' | relative_url }}">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,7 +28,9 @@ permalink: /search-interface/
 </head>
 
 <body>
-    <h1>Search JSON Data</h1>
+    <h4>Search JSON Data</h4>
+    <p class="instructions">Note: The interface is currently under construction. NPS data is not yet connected. Currently, only one test data is available. To test the interface, type "Ursula" in the search bar.</p>
+    <br>
     <input type="text" id="searchInput" placeholder="Type to search..." />
     <button id="searchButton">Search</button>
     <div id="results"></div>
