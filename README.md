@@ -8,5 +8,5 @@
 
 Interface developed by Zhihui (Jerry) Zou
 
-Data credit: National Park Services \
-Github webpage theme credit: Cayman theme
+Data credit: [National Park Service](https://www.nps.gov/tuma/learn/historyculture/mission-2000.htm)  
+Github webpage theme credit: [Cayman theme](https://github.com/pages-themes/cayman)
