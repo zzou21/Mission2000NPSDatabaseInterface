@@ -37,11 +37,39 @@ class fileReformatting:
             CSVJSONFileDestinationPaths.append(pair)
         
         for csvJsonPair in CSVJSONFileDestinationPaths:
-            
-        # Convert DataFrame to JSON# Load CSV into Pandas DataFrame
-            df = pd.read_csv(csvJsonPair[0])
+            df = pd.read_csv(csvJsonPair[0]) #Using pandas dataframe to temporarily hold CSV before turning into JSON
             df.to_json(csvJsonPair[1], orient="records", indent=4)
             print(f"CSV successfully converted {os.path.basename(csvJsonPair[0])}to JSON and saved as {csvJsonPair[1]}")
+
+#This Python class object is used to perform exploratory data processing on JSON files to get a better insight on the Mission 2000 data before writing a JavaScript for interface.
+class exploratoryPythonProcessing:
+    def __init__(self, jsonPathList):
+        self.jsonPathList = jsonPathList
+    
+    def mergeJsons(self, mergedJsonDestinationPath):
+        
+        events_people_df = pd.read_json("events_people.json")  # Links events and people
+        events_df = pd.read_json("events.json")                # Event details
+        people_df = pd.read_json("people.json")                # Personal details
+
+        # Merge events_people with people details
+        merged_people_df = events_people_df.merge(people_df, on="Personal_ID", how="left")
+
+        # Group people under each event
+        grouped_people = merged_people_df.groupby("Event_ID").apply(
+            lambda x: x[["Personal_ID", "Relationship", "Surname", "Givenname", "Sex", "Residence", "Title"]].to_dict(orient="records")
+        ).reset_index(name="People")
+
+        # Merge the grouped people with event details
+        final_df = events_df.merge(grouped_people, on="Event_ID", how="left")
+
+        # Fill empty People lists with an empty array
+        final_df["People"] = final_df["People"].apply(lambda x: x if isinstance(x, list) else [])
+
+        # Save the merged data for JavaScript usage
+        final_df.to_json("merged_data.json", orient="records", indent=4)
+
+        
 
 if __name__ == "__main__":
     mdbFilePath = "/Users/Jerry/Desktop/DH proj-reading/Mission2000NPSDatabaseInterface/dataProcessing/dataFiles/MDB/mission2000.mdb"
@@ -54,6 +82,10 @@ if __name__ == "__main__":
         "/Users/Jerry/Desktop/DH proj-reading/Mission2000NPSDatabaseInterface/dataProcessing/dataFiles/CSV/Event.csv",
         "/Users/Jerry/Desktop/DH proj-reading/Mission2000NPSDatabaseInterface/dataProcessing/dataFiles/CSV/Personal_Information.csv"
     ]
-
-    fileReformattingMachine.CSVToJSON(csvPathList)
-
+    # fileReformattingMachine.CSVToJSON(csvPathList)
+    jsonPathList = [
+        "/Users/Jerry/Desktop/DH proj-reading/Mission2000NPSDatabaseInterface/dataProcessing/dataFiles/CSV/Event_Relationship.csv",
+        "/Users/Jerry/Desktop/DH proj-reading/Mission2000NPSDatabaseInterface/dataProcessing/dataFiles/CSV/Event.csv",
+        "/Users/Jerry/Desktop/DH proj-reading/Mission2000NPSDatabaseInterface/dataProcessing/dataFiles/CSV/Personal_Information.csv"
+    ]
+    mergedJsonDestinationFolderPath = "/Users/Jerry/Desktop/DH proj-reading/Mission2000NPSDatabaseInterface/dataProcessing/dataFiles/JSON"
