@@ -2,7 +2,7 @@ let jsonData = []; // Variable to hold the loaded JSON data
 
 // Fetch JSON data from a file
 function fetchData() {
-  fetch('../AuxiliaryDataProcessing/missionData.json') // Replace with the correct path to your JSON file
+  fetch('../dataProcessing/dataFiles/JSON/combinedData.json') // Replace with correct path
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok ' + response.statusText);
@@ -10,73 +10,89 @@ function fetchData() {
       return response.json();
     })
     .then(data => {
-      jsonData = data; // Store the loaded data
+      jsonData = data;
       console.log("JSON data loaded:", jsonData); // Debugging
     })
     .catch(error => console.error('Error fetching JSON data:', error));
 }
 
-// Function to render search results
-function renderResults(results) {
+// Search function to filter by EventPlace and group by year
+function searchByEventPlace() {
+  const query = document.getElementById("searchInput").value.toLowerCase();
+  const results = [];
+  const yearCounts = {};
+
+  jsonData.forEach(item => {
+    const eventPlace = (item["EventPlace"] || "").toLowerCase();
+    if (eventPlace.includes(query)) {
+      // Parse year from EventDate
+      const dateStr = item["EventDate"];
+      let year = "Unknown";
+      if (dateStr) {
+        const parts = dateStr.split("/");
+        if (parts.length === 3) {
+          year = parts[2]; // assumes MM/DD/YYYY
+        }
+      }
+      item["ParsedYear"] = year;
+      yearCounts[year] = (yearCounts[year] || 0) + 1;
+      results.push(item);
+    }
+  });
+
+  // Sort results by ParsedYear (numeric, unknown last)
+  results.sort((a, b) => {
+    const yearA = isNaN(parseInt(a["ParsedYear"])) ? 9999 : parseInt(a["ParsedYear"]);
+    const yearB = isNaN(parseInt(b["ParsedYear"])) ? 9999 : parseInt(b["ParsedYear"]);
+    return yearA - yearB;
+  });
+
+  renderResults(results, yearCounts);
+}
+
+// Render search results and yearly summary
+function renderResults(results, yearCounts) {
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = ""; // Clear previous results
 
   if (results.length === 0) {
-    resultsDiv.innerHTML = "<p>No results found.</p>";
+    resultsDiv.innerHTML = "<p>No events found for that location.</p>";
     return;
   }
 
-  results.forEach(item => {
+  // Show year summary
+  const summary = document.createElement("div");
+  summary.innerHTML = "<h3>📊 Events per Year</h3>";
+  const sortedYears = Object.keys(yearCounts).sort();
+  const yearList = sortedYears.map(y => `<li>${y}: ${yearCounts[y]} event(s)</li>`).join("");
+  summary.innerHTML += `<ul>${yearList}</ul>`;
+  resultsDiv.appendChild(summary);
+
+  // Show matching events
+  results.forEach(event => {
     const div = document.createElement("div");
     div.classList.add("result-item");
 
-    // Display basic information
     div.innerHTML = `
-      <h2>${item["Given Name"]} (${item["Sex"]})</h2>
-      <p>Title: ${item["Title"] || "N/A"}</p>
-      <p>ID: ${item["id"]}</p>
+      <h2>📌 Event ${event["EventID"]} (${event["ParsedYear"]})</h2>
+      <p><strong>Place:</strong> ${event["EventPlace"] || "N/A"}</p>
+      <p><strong>Date:</strong> ${event["EventDate"] || "Unknown"}</p>
+      <p><strong>Type:</strong> ${event["Event"] || "Unknown"}</p>
+      <p><strong>Book:</strong> ${event["Book"] || "N/A"}</p>
+      <p><strong>Notes:</strong> ${event["Notes"] || "None"}</p>
     `;
-
-    // Display events if available
-    if (item["Events"].length > 0) {
-      const eventsHTML = item["Events"]
-        .map(event => `<li>${event["Event"]} (${event["Relationship"]})</li>`)
-        .join("");
-      div.innerHTML += `<p>Events:</p><ul>${eventsHTML}</ul>`;
-    }
 
     resultsDiv.appendChild(div);
   });
 }
 
-// Search function to filter the JSON data
-function search() {
-  const query = document.getElementById("searchInput").value.toLowerCase();
-
-  const results = jsonData.filter(item => {
-    // Check top-level fields
-    const matchesGivenName = item["Given Name"].toLowerCase().includes(query);
-    const matchesTitle = item["Title"] && item["Title"].toLowerCase().includes(query);
-
-    // Check nested "Events" field
-    const matchesEvents = item["Events"].some(event =>
-      event["Event"].toLowerCase().includes(query) ||
-      event["Relationship"].toLowerCase().includes(query)
-    );
-
-    return matchesGivenName || matchesTitle || matchesEvents;
-  });
-
-  renderResults(results);
-}
-
-// Add event listeners for the search functionality
-document.getElementById("searchButton").addEventListener("click", search);
+// Add event listeners for the search bar
+document.getElementById("searchButton").addEventListener("click", searchByEventPlace);
 document.getElementById("searchInput").addEventListener("keyup", (event) => {
   if (event.key === "Enter") {
-    search();
+    searchByEventPlace();
   }
 });
 
-// Fetch JSON data when the page loads
+// Load data when the page is ready
 fetchData();

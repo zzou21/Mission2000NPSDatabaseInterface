@@ -15,11 +15,40 @@ class dataReformatting:
     def combinePersonToEvents(self):
         personalDictionary = {person["Personal_ID"]: person for person in self.personalInformationContent}
         
-        for event in self.eventRelationshipContent:
-            personIDInEvent = event["Personal_ID"]
-            event["PersonInfo"] = personalDictionary.get(personIDInEvent, None)
+        eventGroupedPersonal = defaultdict(list)
+
+        for record in self.eventRelationshipContent:
+            eventID = record["Event_ID"]
+            person = {
+                "Relationship": record["Relationship"],
+                "Personal_ID": record["Personal_ID"],
+                "Notes": record.get("Notes", None),
+                "PersonInfo": personalDictionary.get(record["Personal_ID"], None)
+            }
+            eventGroupedPersonal[eventID].append(person)
+
+        combinedEventsWithAllPerson = []
+        for eventID, person in eventGroupedPersonal.items():
+            combinedEventsWithAllPerson.append({
+                "EventID": eventID,
+                "Person": person
+            })
         
-        # Combined personal information to event_relationship. Now needs to combine Event_relationship into event
+        eventDescriptionDict = {description["Event_ID"]: description for description in self.eventContent}
+        for event in combinedEventsWithAllPerson:
+            eventID = event["EventID"]
+            oneEventDescriptionDict = eventDescriptionDict.get(eventID, {})
+            for key, value in oneEventDescriptionDict.items():
+                if key != "Event_ID":
+                    event[key] = value
+        
+        for event in combinedEventsWithAllPerson:
+            if event["EventID"] == 5:
+                print(event)
+        
+        with open ("/Users/Jerry/Desktop/DHproj-reading/Mission2000NPSDatabaseInterface/dataProcessing/processingScript/combinedData.json", "w", encoding="utf-8") as f:
+            json.dump(combinedEventsWithAllPerson, f, indent=4)
+        
 
 
 if __name__ == "__main__":
