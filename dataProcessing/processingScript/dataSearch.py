@@ -9,17 +9,14 @@ class dataSearch:
             self.combinedJsonData = json.load(jsonData)
 
     def search_by_event_place(self, keyword):
-        # Step 1: Normalize keyword
         keyword = keyword.lower()
 
-        # Step 2: Filter events by EventPlace
         filtered = []
         for event in self.combinedJsonData:
             event_place = (event.get("EventPlace") or "").lower()
             if keyword in event_place:
                 filtered.append(event)
 
-        # Step 3: Parse year and attach it to each event
         for event in filtered:
             date_str = event.get("EventDate", "")
             try:
@@ -28,15 +25,12 @@ class dataSearch:
                 year = "Unknown"
             event["EventYear"] = year
 
-        # Step 4: Sort by year (handling unknowns last)
         filtered.sort(key=lambda e: (e["EventYear"] if isinstance(e["EventYear"], int) else 9999))
 
-        # Step 5: Count events per year
         year_counts = defaultdict(int)
         for event in filtered:
             year_counts[event["EventYear"]] += 1
 
-        # Step 6: Display results
         print(f"\nResults for EventPlace containing '{keyword}':\n")
         for event in filtered:
             print(f"- Event_ID: {event['EventID']}, Year: {event['EventYear']}, Event: {event['Event']}, Notes: {event.get('Notes', '')}")
@@ -45,8 +39,8 @@ class dataSearch:
         for year in sorted(year_counts):
             print(f"  {year}: {year_counts[year]} event(s)")
 
-        return filtered  # Optionally return the list for further use
-            
+        return filtered
+
         
 
 if __name__=="__main__":
