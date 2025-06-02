@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+#results {
+    margin-top: 20px;
+}
+
+.result-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.caret {
+    cursor: pointer;
+    margin-right: 0.5em;
+    font-weight: bold;
+    user-select: none;
+}
+
+.year-caret {
+    margin-top: 1em;
+    font-size: 1.1em;
+}
+
+.person-details {
+    margin-left: 1em;
+    font-size: 0.9em;
+    display: none;
+}
+
+.instructions {
+  font-size: 14px;
+  color: black;
+  line-height: 1.6;
+  text-align: justify;
+  border-radius: 5px;
+}
