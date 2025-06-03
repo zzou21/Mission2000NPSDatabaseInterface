@@ -127,6 +127,7 @@ function renderResults(results, yearCounts) {
         <p><strong>Type:</strong> ${event["Event"] || "Unknown"}</p>
         <p><strong>Book:</strong> ${event["Book"] || "N/A"}</p>
         <p><strong>Notes:</strong> ${event["Notes"] || "None"}</p>
+        <p><strong>Credit:</strong> ${event["Credit"] || "None"}</p>
       `;
 
       const people = event["Person"] || [];
