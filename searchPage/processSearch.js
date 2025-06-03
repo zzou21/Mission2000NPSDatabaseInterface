@@ -170,7 +170,7 @@ function renderResults(results, yearCounts) {
 
 // Add event listeners for the search bar
 document.getElementById("searchButton").addEventListener("click", searchByEventPlace);
-document.getElementById("searchInput").addEventListener("keyup", (event) => {
+document.getElementById("searchYear").addEventListener("keyup", (event) => {
   if (event.key === "Enter") {
     searchByEventPlace();
   }
