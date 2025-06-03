@@ -50,10 +50,21 @@ class dataSearch:
         listOfEventPlaces = sorted(listOfEventPlaces)
         for event in listOfEventPlaces:
             print(event)
+    
+    def findAllYears(self):
+        eventYears = set()
+        for event in self.combinedJsonData:
+            if event["EventDate"]:
+                eventYears.add(event["EventDate"])
+        eventYearsSet = set(date.split("/")[-1] for date in eventYears)
+
+        listOfYears = sorted(list(eventYearsSet))
+        for year in listOfYears:
+            print(year)
 
 
 if __name__=="__main__":
     jsonDataPath = "/Users/Jerry/Desktop/DHproj-reading/Mission2000NPSDatabaseInterface/dataProcessing/dataFiles/JSON/combinedData.json"
 
     dataSearchMachine = dataSearch(jsonDataPath)
-    dataSearchMachine.findAllEventPlaces()
+    dataSearchMachine.findAllYears()

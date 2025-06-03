@@ -18,29 +18,40 @@ function fetchData() {
 
 // Search function to filter by EventPlace and group by year
 function searchByEventPlace() {
-  const query = document.getElementById("searchInput").value.trim().toLowerCase();
+  const placeQuery = document.getElementById("searchPlace").value.toLowerCase();
+  const yearInput = document.getElementById("searchYear").value.trim();
   const results = [];
   const yearCounts = {};
 
+  // Validate year input (must be blank or 4 digits)
+  if (yearInput && !/^\d{4}$/.test(yearInput)) {
+    alert("Please enter a valid 4-digit year (e.g., 1702) or leave it blank to show all years.");
+    return;
+  }
+
   jsonData.forEach(item => {
     const eventPlace = (item["EventPlace"] || "").toLowerCase();
-    if (eventPlace.includes(query)) {
-      // Parse year from EventDate
-      const dateStr = item["EventDate"];
-      let year = "Unknown";
-      if (dateStr) {
-        const parts = dateStr.split("/");
-        if (parts.length === 3) {
-          year = parts[2]; // assumes MM/DD/YYYY
-        }
+    const dateStr = item["EventDate"];
+    let year = "Unknown";
+
+    if (dateStr) {
+      const parts = dateStr.split("/");
+      if (parts.length === 3) {
+        year = parts[2];
       }
-      item["ParsedYear"] = year;
+    }
+
+    item["ParsedYear"] = year;
+
+    const matchPlace = !placeQuery || eventPlace.includes(placeQuery);
+    const matchYear = !yearInput || year === yearInput;
+
+    if (matchPlace && matchYear) {
       yearCounts[year] = (yearCounts[year] || 0) + 1;
       results.push(item);
     }
   });
 
-  // Sort results by ParsedYear (numeric, unknown last)
   results.sort((a, b) => {
     const yearA = isNaN(parseInt(a["ParsedYear"])) ? 9999 : parseInt(a["ParsedYear"]);
     const yearB = isNaN(parseInt(b["ParsedYear"])) ? 9999 : parseInt(b["ParsedYear"]);
@@ -49,6 +60,7 @@ function searchByEventPlace() {
 
   renderResults(results, yearCounts);
 }
+
 
 // Toggle function for showing/hiding person detail
 function toggleDetails(id, caretElement) {

@@ -258,8 +258,13 @@ permalink: /search-interface/
         <option value="Ímuris, from las Palmillas">Ímuris, from las Palmillas</option>
         <option value="Ïmuris">Ïmuris</option>
     </select>
+
+    <label for="searchYear">Enter Year:</label>
+    <input type="text" id="searchYear" placeholder="e.g., 1702" />
     <button id="searchButton">Search</button>
+
     <div id="results"></div>
+
     <script src="{{ 'searchPage/processSearch.js' | relative_url }}"></script>
 </body>
 </html>
