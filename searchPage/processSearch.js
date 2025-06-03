@@ -72,14 +72,14 @@ function toggleDetails(id, caretElement) {
 // Render search results and yearly summary
 function renderResults(results, yearCounts) {
   const resultsDiv = document.getElementById("results");
-  resultsDiv.innerHTML = ""; // Clear previous results
+  resultsDiv.innerHTML = "";
 
   if (results.length === 0) {
     resultsDiv.innerHTML = "<p>No events found for that location.</p>";
     return;
   }
 
-  // 🔹 Group events by year
+  // Group events by year
   const eventsByYear = {};
   results.forEach(event => {
     const year = event["ParsedYear"];
@@ -89,7 +89,7 @@ function renderResults(results, yearCounts) {
     eventsByYear[year].push(event);
   });
 
-  // 🔹 Sort years (real years first, "Unknown" last)
+  // Sort years (real years first, "Unknown" last)
   const sortedYears = Object.keys(eventsByYear).sort((a, b) => {
     const aIsYear = /^\d{4}$/.test(a);
     const bIsYear = /^\d{4}$/.test(b);
@@ -98,7 +98,7 @@ function renderResults(results, yearCounts) {
     return aIsYear ? -1 : 1;
   });
 
-  // 🔹 Create summary header
+  // Create summary header
   const summary = document.createElement("div");
   summary.innerHTML = "<h3>Events per Year (click to expand)</h3>";
   resultsDiv.appendChild(summary);
@@ -121,7 +121,7 @@ function renderResults(results, yearCounts) {
       const div = document.createElement("div");
       div.classList.add("result-item");
       div.innerHTML = `
-        <h4>Event ${event["EventID"]}</h4>
+        <h4>Event ID: ${event["EventID"]}</h4>
         <p><strong>Place:</strong> ${event["EventPlace"] || "N/A"}</p>
         <p><strong>Date:</strong> ${event["EventDate"] || "Unknown"}</p>
         <p><strong>Type:</strong> ${event["Event"] || "Unknown"}</p>
@@ -181,5 +181,4 @@ document.getElementById("searchYear").addEventListener("keyup", (event) => {
   }
 });
 
-// Fetch data when page loads
 fetchData();
