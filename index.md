@@ -11,6 +11,6 @@ This website provides a new search interface for the Mission 2000 dataset from N
   Click the button below or the "Go to Interface" item in the menu bar above to access the search interface.
 </div>
 <br>
-<div class="btn-container", style="text-align: center;">
+<div class="btn-container">
   <a href="{{ '/search-interface/' | relative_url }}" class="btn">Go to Interface</a>
 </div>

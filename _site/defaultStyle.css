@@ -1,0 +1,39 @@
+/*For default.html: */
+.menu-bar {
+    display: flex;
+    justify-content: center;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .menu-bar a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #007BFF;
+    font-family: Arial, sans-serif;
+  }
+
+  .menu-bar a:hover {
+    text-decoration: underline;
+  }
+
+/*For index.md: */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+  .btn:hover {
+    background-color: #0056b3;
+  }
+
+.btn-container {
+  text-align: center;
+}

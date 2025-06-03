@@ -16,11 +16,12 @@ permalink: /search-interface/
 <body>
     <h4>Search Data</h4>
     <p class="instructions">NOTE: There are a few ways to use this interface: <br>
-        1. Search by Event Place (e.g. Magdalena, etc.) and optionally filter by year <br>
-        2. (Under development) Search by Person name and optionally filter by year <br>
-        3. (Under development) Search by Event Type (e.g. baptism events, marriage events, etc.) and optionally filter by year.</p>
+        Search Option 1. Search by Event Place (e.g. Magdalena, etc.) and optionally filter by year <br>
+        Search Option 2. (Under development) Search by Person name and optionally filter by year <br>
+        Search Option 3. (Under development) Search by Event Type (e.g. baptism events, marriage events, etc.) and optionally filter by year.</p>
     <br>
     <div id="placeAndYearSearch">
+        <label>Search Option 1:<br></label>
         <label for="searchPlace">Select Event Place:</label>
         <select id="searchPlace">
             <option value="">-- Choose a Location --</option>
@@ -274,10 +275,24 @@ permalink: /search-interface/
     <hr>
 
     <div id="personAndYearSearch">
-
+        <label>Search Option 2:<br></label>
+        <p>Under Development</p>
     </div>
-    
-    <div id="results"></div>
+
+    <hr>
+
+    <div id="typeAndYearSearch">
+        <label>Search Option 3:<br></label>
+        <p>Under Development</p>
+    </div>
+
+    <hr>
+            
+    <div id="results">
+
+        
+    </div>
+
 
     <script src="{{ 'searchPage/processSearch.js' | relative_url }}"></script>
 </body>
