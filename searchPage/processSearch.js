@@ -36,7 +36,7 @@ function searchByEventPlace() {
 
     if (dateStr) {
       const parts = dateStr.split("/");
-      if (parts.length === 3) {
+      if (parts.length === 3 && /^\d{4}$/.test(parts[2])) {
         year = parts[2];
       }
     }
@@ -53,14 +53,13 @@ function searchByEventPlace() {
   });
 
   results.sort((a, b) => {
-    const yearA = isNaN(parseInt(a["ParsedYear"])) ? 9999 : parseInt(a["ParsedYear"]);
-    const yearB = isNaN(parseInt(b["ParsedYear"])) ? 9999 : parseInt(b["ParsedYear"]);
+    const yearA = /^\d{4}$/.test(a["ParsedYear"]) ? parseInt(a["ParsedYear"]) : Infinity;
+    const yearB = /^\d{4}$/.test(b["ParsedYear"]) ? parseInt(b["ParsedYear"]) : Infinity;
     return yearA - yearB;
   });
 
   renderResults(results, yearCounts);
 }
-
 
 // Toggle function for showing/hiding person detail
 function toggleDetails(id, caretElement) {
@@ -90,8 +89,14 @@ function renderResults(results, yearCounts) {
     eventsByYear[year].push(event);
   });
 
-  // 🔹 Sort years
-  const sortedYears = Object.keys(eventsByYear).sort();
+  // 🔹 Sort years (real years first, "Unknown" last)
+  const sortedYears = Object.keys(eventsByYear).sort((a, b) => {
+    const aIsYear = /^\d{4}$/.test(a);
+    const bIsYear = /^\d{4}$/.test(b);
+    if (aIsYear && bIsYear) return parseInt(a) - parseInt(b);
+    if (!aIsYear && !bIsYear) return a.localeCompare(b);
+    return aIsYear ? -1 : 1;
+  });
 
   // 🔹 Create summary header
   const summary = document.createElement("div");
@@ -124,7 +129,6 @@ function renderResults(results, yearCounts) {
         <p><strong>Notes:</strong> ${event["Notes"] || "None"}</p>
       `;
 
-      // Add people (same logic as before)
       const people = event["Person"] || [];
       if (people.length > 0) {
         const peopleList = people.map((p, i) => {
@@ -168,7 +172,7 @@ function renderResults(results, yearCounts) {
   });
 }
 
-// Add event listeners for the search bar
+// Add event listeners for the search button and enter key
 document.getElementById("searchButton").addEventListener("click", searchByEventPlace);
 document.getElementById("searchYear").addEventListener("keyup", (event) => {
   if (event.key === "Enter") {
