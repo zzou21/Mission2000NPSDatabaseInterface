@@ -18,7 +18,7 @@ function fetchData() {
 
 // Search function to filter by EventPlace and group by year
 function searchByEventPlace() {
-  const query = document.getElementById("searchInput").value.toLowerCase();
+  const query = document.getElementById("searchInput").value.trim().toLowerCase();
   const results = [];
   const yearCounts = {};
 
@@ -83,7 +83,7 @@ function renderResults(results, yearCounts) {
 
   // 🔹 Create summary header
   const summary = document.createElement("div");
-  summary.innerHTML = "<h3>📊 Events per Year (click to expand)</h3>";
+  summary.innerHTML = "<h3>Events per Year (click to expand)</h3>";
   resultsDiv.appendChild(summary);
 
   sortedYears.forEach(year => {

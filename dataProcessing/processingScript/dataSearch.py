@@ -39,12 +39,21 @@ class dataSearch:
         for year in sorted(year_counts):
             print(f"  {year}: {year_counts[year]} event(s)")
 
-        return filtered
+        # return filtered
 
-        
+    def findAllEventPlaces(self):
+        eventPlaces = set()
+        for event in self.combinedJsonData:
+            if event["EventPlace"]:
+                eventPlaces.add(event["EventPlace"])
+        listOfEventPlaces = list(eventPlaces)
+        listOfEventPlaces = sorted(listOfEventPlaces)
+        for event in listOfEventPlaces:
+            print(event)
+
 
 if __name__=="__main__":
-    jsonDataPath = "/Users/Jerry/Desktop/DHproj-reading/Mission2000NPSDatabaseInterface/dataProcessing/processingScript/combinedData.json"
+    jsonDataPath = "/Users/Jerry/Desktop/DHproj-reading/Mission2000NPSDatabaseInterface/dataProcessing/dataFiles/JSON/combinedData.json"
 
     dataSearchMachine = dataSearch(jsonDataPath)
-    dataSearchMachine.search_by_event_place("Magdalena")
+    dataSearchMachine.findAllEventPlaces()
