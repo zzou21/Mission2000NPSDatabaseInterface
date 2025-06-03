@@ -3,11 +3,14 @@ layout: default
 title: About / Background
 permalink: /about/
 ---
+Developer: Zhihui Zou
 
-Mission 2000 database and search interface was originally created by the National Park Service. The database contains records from Spanish missions of the Pimería Alta.
+[GitHub](https://github.com/zzou21)
 
-Developer of this interface: Zhihui Zou.
+## Credits:
 
-Link to NPS's original search interface: [https://www.nps.gov/tuma/learn/historyculture/mission-2000.htm](https://www.nps.gov/tuma/learn/historyculture/mission-2000.htm).
+The Mission 2000 database and search interface were originally created by the National Park Service (NPS). The database contains records from Spanish missions in the Pimería Alta region. This website simply provides another way to search and display the search results from the one on NPS's website.
 
-This website uses the Cayman theme, which could be found [here](https://github.com/pages-themes/cayman).
+You can find NPS's original search interface: [https://www.nps.gov/tuma/learn/historyculture/mission-2000.htm](https://www.nps.gov/tuma/learn/historyculture/mission-2000.htm).
+
+This website uses the Jekyll [Cayman theme](https://github.com/pages-themes/cayman).
