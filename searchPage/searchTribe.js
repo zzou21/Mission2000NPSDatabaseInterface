@@ -1,46 +1,14 @@
 // This file searches by the tribal affiliation of each individual.
-
-// Display selected tribal affiliations as tags
-document.addEventListener("DOMContentLoaded", function () {
-  const tribeSelect = document.getElementById("searchTribe");
-  const displayDiv = document.getElementById("selectedTribesDisplay");
-
-  function updateDisplay() {
-    const selected = Array.from(tribeSelect.selectedOptions).map(opt => opt.value);
-    displayDiv.innerHTML = "";
-
-    if (selected.length === 0) {
-      displayDiv.innerHTML = "<em>No tribal affiliations selected.</em>";
-      return;
-    }
-
-    selected.forEach(tribe => {
-      const tag = document.createElement("span");
-      tag.textContent = tribe;
-      tag.style.cssText = `
-        display: inline-block;
-        margin: 2px 5px;
-        padding: 5px 10px;
-        background: #eee;
-        border-radius: 15px;
-        font-size: 0.9em;
-      `;
-      displayDiv.appendChild(tag);
-    });
-  }
-
-  tribeSelect.addEventListener("change", updateDisplay);
-  updateDisplay();
-});
-
-(function (){
-
+// This file searches by the tribal affiliation of each individual.
+(function () {
 let jsonData = [];
 
 function fetchData() {
   fetch('../dataProcessing/dataFiles/JSON/combinedData.json')
     .then(response => {
-      if (!response.ok) throw new Error('Network response was not ok ' + response.statusText);
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
       return response.json();
     })
     .then(data => {
@@ -50,18 +18,24 @@ function fetchData() {
     .catch(error => console.error('Error fetching JSON data:', error));
 }
 
-// Main search function
+function toggleDetails(id, caretElement) {
+  const detailsDiv = document.getElementById(`details-${id}`);
+  const isVisible = detailsDiv.style.display === "block";
+  detailsDiv.style.display = isVisible ? "none" : "block";
+  caretElement.textContent = isVisible ? "▸" : "▾";
+}
+window.toggleDetails = toggleDetails;
+
 function searchByTribalAffiliation() {
-  const selectedTribes = Array.from(document.getElementById("searchTribe").selectedOptions)
-    .map(opt => opt.value.trim());
+  const selectedTribes = Array.from(document.getElementById("searchTribe").selectedOptions).map(opt => opt.value.trim());
   const yearInput = document.getElementById("searchYearTribeAffiliation").value.trim();
-  const results = [];
-  const yearCounts = {};
 
   if (yearInput && !/^\d{4}$/.test(yearInput)) {
-    alert("Please enter a valid 4-digit year (e.g., 1741) or leave it blank to search all years.");
+    alert("Please enter a valid 4-digit year (e.g., 1741) or leave it blank.");
     return;
   }
+
+  const yearPersonEventMap = {};
 
   jsonData.forEach(event => {
     const dateStr = event["EventDate"];
@@ -72,144 +46,159 @@ function searchByTribalAffiliation() {
         year = parts[2];
       }
     }
-    event["ParsedYear"] = year;
-
-    const matchYear = !yearInput || year === yearInput;
+    if (yearInput && year !== yearInput) return;
 
     const people = event["Person"] || [];
-    const matchTribe = people.some(person => {
+    people.forEach(person => {
       const tribe = person?.PersonInfo?.RaceorTribe?.trim() || "Unknown";
-      return selectedTribes.includes(tribe);
+      if (!selectedTribes.includes(tribe)) return;
+
+      const key = `${year}||${person.Personal_ID}`;
+      if (!yearPersonEventMap[key]) {
+        yearPersonEventMap[key] = {
+          year,
+          person,
+          events: []
+        };
+      }
+      yearPersonEventMap[key].events.push(event);
     });
-
-    if (matchTribe && matchYear) {
-      yearCounts[year] = (yearCounts[year] || 0) + 1;
-      results.push(event);
-    }
   });
 
-  results.sort((a, b) => {
-    const yearA = /^\d{4}$/.test(a["ParsedYear"]) ? parseInt(a["ParsedYear"]) : Infinity;
-    const yearB = /^\d{4}$/.test(b["ParsedYear"]) ? parseInt(b["ParsedYear"]) : Infinity;
-    return yearA - yearB;
+  const groupedByYear = {};
+  Object.values(yearPersonEventMap).forEach(entry => {
+    const year = entry.year;
+    if (!groupedByYear[year]) groupedByYear[year] = [];
+    groupedByYear[year].push(entry);
   });
 
-  renderResults(results, yearCounts, selectedTribes);
+  renderResultsByPerson(groupedByYear);
 }
 
-// Show/hide person details toggle
-function toggleDetails(id, caretElement) {
-  const detailsDiv = document.getElementById(`details-${id}`);
-  const isVisible = detailsDiv.style.display === "block";
-  detailsDiv.style.display = isVisible ? "none" : "block";
-  caretElement.textContent = isVisible ? "▸" : "▾";
-}
-window.toggleDetails = toggleDetails;
-
-// Renders results grouped by year
-function renderResults(results, yearCounts, selectedTribes) {
+function renderResultsByPerson(groupedByYear) {
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
 
-  if (results.length === 0) {
-    resultsDiv.innerHTML = "<p>No events found for the selected tribal affiliation(s).</p>";
+  const sortedYears = Object.keys(groupedByYear).sort((a, b) => {
+    const isNumA = /^\d{4}$/.test(a);
+    const isNumB = /^\d{4}$/.test(b);
+    if (isNumA && isNumB) return parseInt(a) - parseInt(b);
+    if (!isNumA && !isNumB) return a.localeCompare(b);
+    return isNumA ? -1 : 1;
+  });
+
+  if (sortedYears.length === 0) {
+    resultsDiv.innerHTML = "<p>No people found for the selected tribal affiliation(s).</p>";
     return;
   }
 
-  const eventsByYear = {};
-  results.forEach(event => {
-    const year = event["ParsedYear"];
-    if (!eventsByYear[year]) eventsByYear[year] = [];
-    eventsByYear[year].push(event);
-  });
-
-  const sortedYears = Object.keys(eventsByYear).sort((a, b) => {
-    const aIsYear = /^\d{4}$/.test(a);
-    const bIsYear = /^\d{4}$/.test(b);
-    if (aIsYear && bIsYear) return parseInt(a) - parseInt(b);
-    if (!aIsYear && !bIsYear) return a.localeCompare(b);
-    return aIsYear ? -1 : 1;
-  });
-
   const summary = document.createElement("div");
-  summary.innerHTML = "<h3>Events per Year (click to expand)</h3>";
+  summary.innerHTML = "<h3>People by Year (click to expand)</h3>";
   resultsDiv.appendChild(summary);
 
   sortedYears.forEach(year => {
+    const people = groupedByYear[year];
     const caretId = `year-${year}`;
     const caret = document.createElement("div");
     caret.classList.add("year-caret");
     caret.innerHTML = `
       <span class="caret" onclick="toggleDetails('${caretId}', this)">▸</span>
-      <strong>${year}</strong>: ${eventsByYear[year].length} event(s)
+      <strong>${year}</strong>: ${people.length} person(s)
     `;
 
-    const eventList = document.createElement("div");
-    eventList.id = `details-${caretId}`;
-    eventList.style.display = "none";
+    const personList = document.createElement("div");
+    personList.id = `details-${caretId}`;
+    personList.style.display = "none";
 
-    eventsByYear[year].forEach((event, eventIndex) => {
-      const div = document.createElement("div");
-      div.classList.add("result-item");
-      div.innerHTML = `
-        <h4>Event ID: ${event["EventID"]}</h4>
-        <p><strong>Place:</strong> ${event["EventPlace"] || "N/A"}</p>
-        <p><strong>Date:</strong> ${event["EventDate"] || "Unknown"}</p>
-        <p><strong>Type:</strong> ${event["Event"] || "Unknown"}</p>
-        <p><strong>Book:</strong> ${event["Book"] || "N/A"}</p>
-        <p><strong>Notes:</strong> ${event["Notes"] || "None"}</p>
-        <p><strong>Credit:</strong> ${event["Credit"] || "None"}</p>
+    people.forEach((entry, index) => {
+      const p = entry.person;
+      const info = p["PersonInfo"] || {};
+      const fullName = [info["Givenname"], info["Surname"]].filter(Boolean).join(" ") || "Unknown Name";
+      const tribe = info["RaceorTribe"] || "Unknown";
+      const relationship = p["Relationship"] || "Unknown Role";
+      const title = info["Title"] ? ` (${info["Title"]})` : "";
+      const personId = `${year}-${index}`;
+
+      const personDiv = document.createElement("div");
+      personDiv.classList.add("result-item");
+      personDiv.innerHTML = `
+        <span class="caret" onclick="toggleDetails('${personId}', this)">▸</span>
+        <strong>${relationship}</strong>: ${fullName}${title} <strong style="color:green;">(${tribe})</strong>
+        <div class="person-details" id="details-${personId}" style="display:none; margin-left:1em; font-size:0.9em;">
+          <p><strong>Sex:</strong> ${info["Sex"] || "N/A"}</p>
+          <p><strong>Place of Birth:</strong> ${info["Placeofbirth"] || "N/A"}</p>
+          <p><strong>Place of Death:</strong> ${info["Placeofdeath"] || "N/A"}</p>
+          <p><strong>Residence:</strong> ${info["Residence"] || "N/A"}</p>
+          <p><strong>Race or Tribe:</strong> ${tribe}</p>
+          <p><strong>Title:</strong> ${info["Title"] || "N/A"}</p>
+          <p><strong>Place of Service:</strong> ${info["PlaceofService"] || "N/A"}</p>
+          <p><strong>Order:</strong> ${info["Order"] || "N/A"}</p>
+          <p><strong>Notes:</strong> ${info["Notes"] || "None"}</p>
+        </div>
       `;
 
-      const people = event["Person"] || [];
-      if (people.length > 0) {
-        const peopleList = people.map((p, i) => {
-          const info = p["PersonInfo"] || {};
-          const tribe = info["RaceorTribe"]?.trim() || "Unknown";
-          const fullName = [info["Givenname"], info["Surname"]].filter(Boolean).join(" ") || "Unknown Name";
-          const relationship = p["Relationship"] || "Unknown Role";
-          const title = info["Title"] ? ` (${info["Title"]})` : "";
-          const id = `${event["EventID"]}-${eventIndex}-${i}`;
-          const highlight = selectedTribes.includes(tribe) ? `<strong style="color:green;"> (Matched Tribe)</strong>` : "";
+      const eventDetails = document.createElement("ul");
+      eventDetails.style.marginTop = "0.5em";
 
-          const details = `
-            <div class="person-details" id="details-${id}" style="display:none; margin-left:1em; font-size:0.9em;">
-              <p><strong>Sex:</strong> ${info["Sex"] || "N/A"}</p>
-              <p><strong>Place of Birth:</strong> ${info["Placeofbirth"] || "N/A"}</p>
-              <p><strong>Place of Death:</strong> ${info["Placeofdeath"] || "N/A"}</p>
-              <p><strong>Residence:</strong> ${info["Residence"] || "N/A"}</p>
-              <p><strong>Race or Tribe:</strong> ${tribe}</p>
-              <p><strong>Title:</strong> ${info["Title"] || "N/A"}</p>
-              <p><strong>Place of Service:</strong> ${info["PlaceofService"] || "N/A"}</p>
-              <p><strong>Order:</strong> ${info["Order"] || "N/A"}</p>
-              <p><strong>Notes:</strong> ${info["Notes"] || "None"}</p>
-            </div>
-          `;
+      entry.events.forEach(evt => {
+        const evtInfoWrapper = document.createElement("li");
+        evtInfoWrapper.style.marginBottom = "0.5em";
 
-          return `
-            <li>
-              <span class="caret" onclick="toggleDetails('${id}', this)">▸</span>
-              <strong>${relationship}</strong>: ${fullName}${title} ${highlight}
-              ${details}
-            </li>
-          `;
-        }).join("");
+        const eventMeta = `
+          <strong>Event ID:</strong> ${evt["EventID"]} |
+          <strong>Type:</strong> ${evt["Event"] || "Unknown"} |
+          <strong>Date:</strong> ${evt["EventDate"] || "Unknown"} |
+          <strong>Place:</strong> ${evt["EventPlace"] || "N/A"} |
+          <strong>Book:</strong> ${evt["Book"] || "N/A"} |
+          <strong>Credit:</strong> ${evt["Credit"] || "None"}
+        `;
 
-        div.innerHTML += `<p><strong>People Involved:</strong></p><ul>${peopleList}</ul>`;
-      }
+        evtInfoWrapper.innerHTML = eventMeta;
 
-      eventList.appendChild(div);
+        const others = evt["Person"]
+          .filter(other => other.Personal_ID !== p.Personal_ID)
+          .map((other, idx) => {
+            const oInfo = other["PersonInfo"] || {};
+            const oName = [oInfo["Givenname"], oInfo["Surname"]].filter(Boolean).join(" ") || "Unknown Name";
+            const oRole = other["Relationship"] || "Unknown Role";
+            const oTribe = oInfo["RaceorTribe"] || "Unknown";
+
+            return `
+              <details style="margin-top: 0.25em; margin-left: 1em;">
+                <summary><strong>${oRole}</strong>: ${oName} (${oTribe})</summary>
+                <div style="font-size: 0.85em; margin-left: 1em;">
+                  <p><strong>Sex:</strong> ${oInfo["Sex"] || "N/A"}</p>
+                  <p><strong>Place of Birth:</strong> ${oInfo["Placeofbirth"] || "N/A"}</p>
+                  <p><strong>Place of Death:</strong> ${oInfo["Placeofdeath"] || "N/A"}</p>
+                  <p><strong>Residence:</strong> ${oInfo["Residence"] || "N/A"}</p>
+                  <p><strong>Race or Tribe:</strong> ${oTribe}</p>
+                  <p><strong>Title:</strong> ${oInfo["Title"] || "N/A"}</p>
+                  <p><strong>Place of Service:</strong> ${oInfo["PlaceofService"] || "N/A"}</p>
+                  <p><strong>Order:</strong> ${oInfo["Order"] || "N/A"}</p>
+                  <p><strong>Notes:</strong> ${oInfo["Notes"] || "None"}</p>
+                </div>
+              </details>
+            `;
+          }).join("");
+
+        if (others.length > 0) {
+          const wrapper = document.createElement("div");
+          wrapper.innerHTML = `<p style="margin-top: 0.25em;"><em>Other people involved:</em></p>${others}`;
+          evtInfoWrapper.appendChild(wrapper);
+        }
+
+        eventDetails.appendChild(evtInfoWrapper);
+      });
+
+      personDiv.appendChild(eventDetails);
+      personList.appendChild(personDiv);
     });
 
     resultsDiv.appendChild(caret);
-    resultsDiv.appendChild(eventList);
+    resultsDiv.appendChild(personList);
   });
 }
 
-// Register event listener for tribe-based search
 document.getElementById("searchButtonTribeAffiliation").addEventListener("click", searchByTribalAffiliation);
-
-// Load data on page load
 fetchData();
-
 })();

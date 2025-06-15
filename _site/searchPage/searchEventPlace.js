@@ -185,5 +185,4 @@ document.getElementById("searchYear").addEventListener("keyup", (event) => {
 });
 
 fetchData();
-
 })();

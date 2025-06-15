@@ -67,7 +67,7 @@
         Search Option 1. Search by Event Place (e.g. Magdalena, etc.) and optionally filter by year. <br>
         Search Option 2. (Under development) Search by Person name and optionally filter by year. <br>
         Search Option 3. (Under development) Search by Event Type (e.g. baptism events, marriage events, etc.) and optionally filter by year. <br>
-        Search Option 4. (Under development) Search by tribal affiliation of each person and optioanlly filter by year.</p>
+        Search Option 4. Search by tribal affiliation of each person and optioanlly filter by year.</p>
     <br>
     <div id="placeAndYearSearch">
         <label>Search Option 1:<br></label>
@@ -340,10 +340,10 @@
     <div id="tribeAffiliationSearch">
         <label>Search Option 4:<br></label>
         <label for="searchTribe">Select Tribal Affiliation:</label>
+        <p id="multiSelectInstructions">To select and search multiple tribal affiliations at once, hold down "Cntl" for Windows machines or "Cmd" for Apple Mac machines while clicking on multiple choices.</p>
         <div id="selectedTribesDisplay" style="margin-bottom: 10px;"></div>
 
-        <select id="searchTribe" multiple size="8">
-            <option value="">-- Choose a Tribal Affiliation --</option>
+        <select id="searchTribe" multiple size="20">
             <option value="Unknown">Affiliation unknown</option>
             <option value="Andaluz">Andaluz</option>
             <option value="Anglo-American">Anglo-American</option>
@@ -537,8 +537,6 @@
         <br>
         <br>
         <button id="searchButtonTribeAffiliation">Search by Tribal Affiliation and/or Year</button>
-
-
 
     </div>
 
