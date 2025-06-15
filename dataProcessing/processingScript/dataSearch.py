@@ -61,10 +61,27 @@ class dataSearch:
         listOfYears = sorted(list(eventYearsSet))
         for year in listOfYears:
             print(year)
+    
+    def findAllTribalAffiliations(self):
+        tribalAffiliations = set()
+        for event in self.combinedJsonData:
+            affiliatedPersons = event.get("Person", [])
+            for onePerson in affiliatedPersons:
+                personalInformation = onePerson.get("PersonInfo", {})
+                tribalAffiliation = personalInformation.get("RaceorTribe")
+                
+                if tribalAffiliation:
+                    tribalAffiliations.add(tribalAffiliation.strip())
+                else:
+                    tribalAffiliations.add("Unknown")  # placeholder for nulls
+
+        listOfTribalAffiliations = sorted(list(tribalAffiliations))
+        for tribe in listOfTribalAffiliations:
+            print(tribe)
 
 
 if __name__=="__main__":
     jsonDataPath = "/Users/Jerry/Desktop/DHproj-reading/Mission2000NPSDatabaseInterface/dataProcessing/dataFiles/JSON/combinedData.json"
 
     dataSearchMachine = dataSearch(jsonDataPath)
-    dataSearchMachine.findAllYears()
+    dataSearchMachine.findAllTribalAffiliations()

@@ -1,3 +1,5 @@
+// This file searches by event and optionally search by year.
+
 let jsonData = [];
 
 // Fetch JSON data from a file
