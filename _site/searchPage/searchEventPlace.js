@@ -1,5 +1,6 @@
 // This file searches by event and optionally search by year.
 
+(function() {
 let jsonData = [];
 
 // Fetch JSON data from a file
@@ -184,3 +185,5 @@ document.getElementById("searchYear").addEventListener("keyup", (event) => {
 });
 
 fetchData();
+
+})();

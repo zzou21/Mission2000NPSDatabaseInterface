@@ -33,7 +33,8 @@ document.addEventListener("DOMContentLoaded", function () {
   updateDisplay();
 });
 
-// Load JSON data
+(function (){
+
 let jsonData = [];
 
 function fetchData() {
@@ -93,7 +94,7 @@ function searchByTribalAffiliation() {
     return yearA - yearB;
   });
 
-  renderResults(results, yearCounts);
+  renderResults(results, yearCounts, selectedTribes);
 }
 
 // Show/hide person details toggle
@@ -103,9 +104,10 @@ function toggleDetails(id, caretElement) {
   detailsDiv.style.display = isVisible ? "none" : "block";
   caretElement.textContent = isVisible ? "▸" : "▾";
 }
+window.toggleDetails = toggleDetails;
 
 // Renders results grouped by year
-function renderResults(results, yearCounts) {
+function renderResults(results, yearCounts, selectedTribes) {
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
 
@@ -209,3 +211,5 @@ document.getElementById("searchButtonTribeAffiliation").addEventListener("click"
 
 // Load data on page load
 fetchData();
+
+})();
