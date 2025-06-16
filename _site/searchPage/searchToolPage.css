@@ -3,8 +3,10 @@ body {
 }
 
 h4 {
-    margin-top: 3px;
-    margin-bottom: 3px;
+  font-size: 1rem;       /* You can go smaller if needed, e.g., 0.9rem or 14px */
+  margin: 0 0 0.5em 0;   /* Top, right, bottom, left margins */
+  padding: 0;            /* Remove any default padding */
+  line-height: 1.2;      /* Tighten line spacing */
 }
 
 br {
@@ -61,4 +63,24 @@ hr {
   border-radius: 15px;
   font-size: 0.85em;
   color: #333;
+}
+
+/* Creating the grids that divides the search options on the search screen.*/
+#searchGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  gap: 20px;
+  padding: 20px;
+}
+/* Creating the borderlines around each grid box that divides the search options on the search screen.*/
+.searchBox {
+  border: 1px solid black;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+/* Standardizes the size of dropdown list screens. */
+select {
+    width: 300px;
 }
