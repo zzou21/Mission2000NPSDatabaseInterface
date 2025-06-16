@@ -284,15 +284,54 @@ permalink: /search-interface/
 
     <div id="typeAndYearSearch">
         <label>Search Option 3:<br></label>
-        <p>Under Development</p>
+        <label for="searchEventType">Select event type:</label>
+        <p id="multiSelectInstructions">To select and search multiple event types at once, hold down "Cntl" for Windows machines or "Cmd" for Apple Mac machines while clicking on multiple choices.</p>
+        <div id="selectedEventTypeDisplay" style="margin-bottom: 10px;"></div>
+        <select id="searchEventType" multiple size="10">
+            <option value="Unknown">Event Type Unknown</option>
+            <option value="Baptism">Baptism</option>
+            <option value="Baptism/Confirmation">Baptism/Confirmation</option>
+            <option value="Baptism/Marriage">Baptism/Marriage</option>
+            <option value="Birth">Birth</option>
+            <option value="Boarding List">Boarding List</option>
+            <option value="Burial">Burial</option>
+            <option value="Census">Census</option>
+            <option value="Indictment">Indictment</option>
+            <option value="Inspection of Troops">Inspection of Troops</option>
+            <option value="Marriage">Marriage</option>
+            <option value="Marriage License">Marriage License</option>
+            <option value="Marriage Presentation">Marriage Presentation</option>
+            <option value="Marriage presentation">Marriage presentation</option>
+            <option value="Notation">Notation</option>
+            <option value="Nuptial Benediction">Nuptial Benediction</option>
+            <option value="Oath">Oath</option>
+            <option value="Official Correspondence">Official Correspondence</option>
+            <option value="Passenger List">Passenger List</option>
+            <option value="Priest's Explanation of Pima Uprising">Priest's Explanation of Pima Uprising</option>
+            <option value="Probate">Probate</option>
+            <option value="Proof of Nobility">Proof of Nobility</option>
+            <option value="Review of Troops">Review of Troops</option>
+            <option value="Royal Appointment">Royal Appointment</option>
+            <option value="Sentencing">Sentencing</option>
+            <option value="Ship Manifest">Ship Manifest</option>
+        </select>
+        <br>
+        <br>
+        <label for="searchYearEventTypeffiliation">Enter Year (leave blank if you wish to search events in all years):</label>
+        <input type="text" id="searchYearEventTypeAffiliation" placeholder="e.g., 1702" />
+        <br>
+        <br>
+        <button id="searchButtonEventType">Search by Event Type and/or Year</button>
+
+
     </div>
 
     <hr>
 
     <div id="tribeAffiliationSearch">
         <label>Search Option 4:<br></label>
-        <label for="searchTribe">Select Tribal Affiliation:</label>
-        <p id="multiSelectInstructions">To select and search multiple tribal affiliations at once, hold down "Cntl" for Windows machines or "Cmd" for Apple Mac machines while clicking on multiple choices.</p>
+        <label for="searchTribe">Select tribal affiliation:</label>
+        <p id="multiSelectInstructions">To select and search multiple tribal affiliations at once, hold down "Ctrl" for Windows machines or "Cmd" for Apple Mac machines while clicking on multiple choices.</p>
         <div id="selectedTribesDisplay" style="margin-bottom: 10px;"></div>
 
         <select id="searchTribe" multiple size="20">
@@ -493,12 +532,16 @@ permalink: /search-interface/
     </div>
 
     <hr>
-            
+    <p>Search result: </p>
+    <br>
+    <br>
     <div id="results">
 
     </div>
 
     <script src="{{ 'searchPage/searchEventPlace.js' | relative_url }}"></script>
+    <script src="{{ 'searchPage/searchEventType.js' | relative_url }}"></script>
     <script src="{{ 'searchPage/searchTribe.js' | relative_url }}"></script>
+    <script src="{{ 'searchPage/searchPersonName.js' | relative_url }}"></script>
 </body>
 </html>

@@ -1,5 +1,37 @@
 // This file searches by the tribal affiliation of each individual.
-// This file searches by the tribal affiliation of each individual.
+
+document.addEventListener("DOMContentLoaded", function () {
+  const select = document.getElementById("searchTribe");
+  const display = document.getElementById("selectedTribesDisplay");
+
+  select.addEventListener("change", function () {
+  display.innerHTML = ""; // Clear previous display
+
+  const selectedOptions = Array.from(select.selectedOptions);
+
+  selectedOptions.forEach(option => {
+      const pill = document.createElement("span");
+      pill.className = "pill";
+      pill.textContent = option.value;
+      display.appendChild(pill);
+  });
+  });
+  // Override default select behavior
+  Array.from(select.options).forEach(option => {
+    option.addEventListener("mousedown", function (e) {
+      e.preventDefault(); // Prevent default click behavior
+
+      // Toggle selected state manually
+      option.selected = !option.selected;
+
+      // Optionally trigger 'change' event to update pills or filters
+      const event = new Event('change', { bubbles: true });
+      select.dispatchEvent(event);
+    });
+  });
+});
+
+
 (function () {
 let jsonData = [];
 

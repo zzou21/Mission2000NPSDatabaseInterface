@@ -79,9 +79,22 @@ class dataSearch:
         for tribe in listOfTribalAffiliations:
             print(tribe)
 
+    def findAllEventTypes(self):
+        eventTypes = set()
+        for event in self.combinedJsonData:
+            eventType = event["Event"]
+            if eventType:
+                eventTypes.add(eventType)
+            else:
+                eventTypes.add("Unknown")
+        listOfEventTypes = sorted(list(eventTypes))
+        for eventType in listOfEventTypes:
+            print(eventType)
+
+
 
 if __name__=="__main__":
     jsonDataPath = "/Users/Jerry/Desktop/DHproj-reading/Mission2000NPSDatabaseInterface/dataProcessing/dataFiles/JSON/combinedData.json"
 
     dataSearchMachine = dataSearch(jsonDataPath)
-    dataSearchMachine.findAllTribalAffiliations()
+    dataSearchMachine.findAllEventTypes()

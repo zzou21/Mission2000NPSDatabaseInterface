@@ -51,3 +51,14 @@ hr {
     margin-top: 0px;
     margin-bottom: 0px;
 }
+
+/* For display pill to remind users which options from the dropdown search list they've selected during multi-select.*/
+.pill {
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 3px;
+  background-color: #e0e0e0;
+  border-radius: 15px;
+  font-size: 0.85em;
+  color: #333;
+}
