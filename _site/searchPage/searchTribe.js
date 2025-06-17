@@ -74,7 +74,7 @@ function toggleDetails(id, caretElement) {
   const detailsDiv = document.getElementById(`details-${id}`);
   const isVisible = detailsDiv.style.display === "block";
   detailsDiv.style.display = isVisible ? "none" : "block";
-  caretElement.textContent = isVisible ? "▸" : "▾";
+  caretElement.innerHTML = isVisible ? "&#9654;" : "&#9660;";
 }
 window.toggleDetails = toggleDetails;
 
@@ -131,7 +131,7 @@ function searchByTribalAffiliation() {
 function renderResultsByPerson(groupedByYear) {
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
-    const selectedPlaces = Array.from(document.getElementById("searchTribe").selectedOptions)
+  const selectedPlaces = Array.from(document.getElementById("searchTribe").selectedOptions)
     .map(opt => opt.value)
     .join(", ") || "All Tribal Affiliations";
 

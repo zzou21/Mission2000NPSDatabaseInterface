@@ -136,7 +136,6 @@ function toggleDetails(id, caretElement) {
 function renderResults(results, yearCounts) {
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
-
   const selectedPlaces = Array.from(document.getElementById("searchPlace").selectedOptions)
     .map(opt => opt.value)
     .join(", ") || "All Locations";
