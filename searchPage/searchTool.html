@@ -16,17 +16,18 @@ permalink: /search-interface/
 <body>
     <h4>Search Data</h4>
     
-    <p class="instructions">NOTE: There are a few ways to use this interface: <br>
-        Search Option 1. Search by Event Place (e.g. Magdalena, etc.) and optionally filter by year. <br>
-        Search Option 2. (Under development) Search by Person name and optionally filter by year. <br>
-        Search Option 3. Search by Event Type (e.g. baptism events, marriage events, etc.) and optionally filter by year. <br>
-        Search Option 4. Search by tribal affiliation of each person and optioanlly filter by year.</p>
+    <p class="instructions">There are four ways to engage with this interface: <br>
+        Search Option 1. Search by Event Place (e.g. Magdalena, etc.) and optionally filter by year of the event. <br>
+        Search Option 2. Search by Person name and optionally filter by year. <br>
+        Search Option 3. Search by Event Type (e.g. baptism events, marriage events, etc.) and optionally filter by year of the event. <br>
+        Search Option 4. Search by a person's Tribal Affiliation and optionally filter by year of the event the person is associated with.</p>
 
     <div id="searchGrid">
         <div class="searchBox">
             <div id="placeAndYearSearch">
                 <label>Search Option 1:<br></label>
                 <label for="searchPlace">Select event place:</label>
+                <p class="multiSelectInstructions">To select and search multiple event types at once, simply click on multiple options from the list below. Click on the option again to unselect.</p>
                 <div id="selectedEventPlaceDisplay" style="margin-bottom: 10px;"></div>
                 <select id="searchPlace" multiple size="10">
                     <option value="Arizpe">Arizpe</option>
@@ -269,18 +270,32 @@ permalink: /search-interface/
                 </select>
                 <br>
                 <br>
-                <label for="searchYear">Enter Year (leave blank if you wish to search events in all years):</label>
-                <input type="text" id="searchYear" placeholder="e.g., 1702" />
+                <label for="searchYearEventPlace">Enter Year (leave blank if you wish to search events in all years):</label>
+                <input type="text" id="searchYearEventPlace" placeholder="e.g., 1702" />
                 <br>
                 <br>
-                <button id="searchButton">Search by Event Place and/or Year</button>
+                <button id="searchEventPlaceButton">Search by Event Place and/or Year</button>
             </div>
         </div>
         
         <div class="searchBox">
             <div id="personAndYearSearch">
                 <label>Search Option 2:<br></label>
-                <p>Under Development</p>
+                <div class="search-box" id="nameSearchBox">
+                    <p>Enter person name:</p>
+
+                    <label for="firstNameInput">First Name:</label><br>
+                    <input type="text" id="firstNameInput" placeholder="Enter first name"><br><br>
+
+                    <label for="lastNameInput">Last Name:</label><br>
+                    <input type="text" id="lastNameInput" placeholder="Enter last name"><br><br>
+
+                    <label for="yearInput">Enter Year (leave blank if you wish to search events in all years):</label><br>
+                    <input type="text" id="searchNameYear" placeholder="e.g., 1702"><br><br>
+
+                    <button id="searchByNameButton">Search</button>
+                    </div>
+
             </div>
         </div>
 
@@ -288,7 +303,7 @@ permalink: /search-interface/
             <div id="typeAndYearSearch">
                 <label>Search Option 3:<br></label>
                 <label for="searchEventType">Select event type:</label>
-                <p id="multiSelectInstructions">To select and search multiple event types at once, hold down "Cntl" for Windows machines or "Cmd" for Apple Mac machines while clicking on multiple choices.</p>
+                <p class="multiSelectInstructions">To select and search multiple event types at once, simply click on multiple options from the list below. Click on the option again to unselect.</p>
                 <div id="selectedEventTypeDisplay" style="margin-bottom: 10px;"></div>
                 <select id="searchEventType" multiple size="10">
                     <option value="Unknown">Event Type Unknown</option>
@@ -320,7 +335,7 @@ permalink: /search-interface/
                 </select>
                 <br>
                 <br>
-                <label for="searchYearEventTypeffiliation">Enter Year (leave blank if you wish to search events in all years):</label>
+                <label for="searchYearEventTypeAffiliation">Enter Year (leave blank if you wish to search events in all years):</label>
                 <input type="text" id="searchYearEventTypeAffiliation" placeholder="e.g., 1702" />
                 <br>
                 <br>
@@ -334,7 +349,7 @@ permalink: /search-interface/
             <div id="tribeAffiliationSearch">
                 <label>Search Option 4:<br></label>
                 <label for="searchTribe">Select tribal affiliation:</label>
-                <p id="multiSelectInstructions">To select and search multiple tribal affiliations at once, hold down "Ctrl" for Windows machines or "Cmd" for Apple Mac machines while clicking on multiple choices.</p>
+                <p class="multiSelectInstructions">To select and search multiple event types at once, simply click on multiple options from the list below. Click on the option again to unselect.</p>
                 <div id="selectedTribesDisplay" style="margin-bottom: 10px;"></div>
 
                 <select id="searchTribe" multiple size="10">

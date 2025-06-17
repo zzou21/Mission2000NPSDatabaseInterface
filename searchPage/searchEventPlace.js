@@ -32,8 +32,30 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+
 (function() {
 let jsonData = [];
+
+
+function clearMultiSelect(selectId, pillDisplayId) {
+  const select = document.getElementById(selectId);
+  const display = document.getElementById(pillDisplayId);
+
+  if (select) {
+    Array.from(select.options).forEach(option => {
+      option.selected = false;
+    });
+
+    // Manually trigger change to update pills
+    const event = new Event('change', { bubbles: true });
+    select.dispatchEvent(event);
+  }
+
+  if (display) {
+    display.innerHTML = "";
+  }
+}
+
 
 // Fetch JSON data from a file
 function fetchData() {
@@ -53,8 +75,10 @@ function fetchData() {
 
 // Search function to filter by EventPlace and group by year
 function searchByEventPlace() {
-  const placeQuery = document.getElementById("searchPlace").value.toLowerCase();
-  const yearInput = document.getElementById("searchYear").value.trim();
+  const selectedPlaces = Array.from(document.getElementById("searchPlace").selectedOptions)
+  .map(opt => opt.value.toLowerCase());
+
+  const yearInput = document.getElementById("searchYearEventPlace").value.trim();
   const results = [];
   const yearCounts = {};
 
@@ -78,7 +102,8 @@ function searchByEventPlace() {
 
     item["ParsedYear"] = year;
 
-    const matchPlace = !placeQuery || eventPlace.includes(placeQuery);
+    const matchPlace = selectedPlaces.length === 0 || selectedPlaces.some(p => eventPlace.includes(p));
+
     const matchYear = !yearInput || year === yearInput;
 
     if (matchPlace && matchYear) {
@@ -94,6 +119,9 @@ function searchByEventPlace() {
   });
 
   renderResults(results, yearCounts);
+  clearMultiSelect("searchPlace", "selectedEventPlaceDisplay");
+  document.getElementById("searchYearEventPlace").value = ""; // Optional: clear year input too
+
 }
 
 // Toggle function for showing/hiding person detail
@@ -108,6 +136,17 @@ function toggleDetails(id, caretElement) {
 function renderResults(results, yearCounts) {
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
+
+  const selectedPlaces = Array.from(document.getElementById("searchPlace").selectedOptions)
+    .map(opt => opt.value)
+    .join(", ") || "All Locations";
+
+  const yearInput = document.getElementById("searchYearEventPlace").value.trim() || "All Years";
+
+  const description = document.createElement("div");
+  description.innerHTML = `<h3>Results for: <em>${selectedPlaces}</em> in <em>${yearInput}</em></h3>`;
+  resultsDiv.appendChild(description);
+
 
   if (results.length === 0) {
     resultsDiv.innerHTML = "<p>No events found for that location.</p>";
@@ -185,6 +224,9 @@ function renderResults(results, yearCounts) {
               <p><strong>Place of Service:</strong> ${info["PlaceofService"] || "N/A"}</p>
               <p><strong>Order:</strong> ${info["Order"] || "N/A"}</p>
               <p><strong>Notes:</strong> ${info["Notes"] || "None"}</p>
+              <p><strong>Date of birth:</strong> ${info["Dateofbirth"] || "None"}</p>
+              <p><strong>Date of death:</strong> ${info["Dateofdeath"] || "None"}</p>
+
             </div>
           `;
 
@@ -209,8 +251,8 @@ function renderResults(results, yearCounts) {
 }
 
 // Add event listeners for the search button and enter key
-document.getElementById("searchButton").addEventListener("click", searchByEventPlace);
-document.getElementById("searchYear").addEventListener("keyup", (event) => {
+document.getElementById("searchEventPlaceButton").addEventListener("click", searchByEventPlace);
+document.getElementById("searchYearEventPlace").addEventListener("keyup", (event) => {
   if (event.key === "Enter") {
     searchByEventPlace();
   }

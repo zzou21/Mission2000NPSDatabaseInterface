@@ -36,6 +36,26 @@ document.addEventListener("DOMContentLoaded", function () {
 (function () {
 let jsonData = [];
 
+function clearMultiSelect(selectId, pillDisplayId) {
+  const select = document.getElementById(selectId);
+  const display = document.getElementById(pillDisplayId);
+
+  if (select) {
+    Array.from(select.options).forEach(option => {
+      option.selected = false;
+    });
+
+    // Manually trigger change to update pills
+    const event = new Event('change', { bubbles: true });
+    select.dispatchEvent(event);
+  }
+
+  if (display) {
+    display.innerHTML = "";
+  }
+}
+
+
 function fetchData() {
   fetch('../dataProcessing/dataFiles/JSON/combinedData.json')
     .then(response => {
@@ -88,11 +108,29 @@ function searchByEventType() {
   });
 
   renderResultsByType(resultsByType);
+  clearMultiSelect("searchEventType", "selectedEventTypeDisplay")
 }
 
 function renderResultsByType(resultsByType) {
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
+
+  const selectedPlaces = Array.from(document.getElementById("searchEventType").selectedOptions)
+    .map(opt => opt.value)
+    .join(", ") || "All Event Types";
+
+  const yearInput = document.getElementById("searchYearEventTypeAffiliation").value.trim() || "All Years";
+
+  const description = document.createElement("div");
+  description.innerHTML = `<h3>Results for: <em>${selectedPlaces}</em> in <em>${yearInput}</em></h3>`;
+  resultsDiv.appendChild(description);
+
+
+  if (results.length === 0) {
+    resultsDiv.innerHTML = "<p>No events found for that event type.</p>";
+    return;
+  }
+
 
   if (Object.keys(resultsByType).length === 0) {
     resultsDiv.innerHTML = "<p>No events found for the selected event types.</p>";
@@ -172,6 +210,9 @@ function renderResultsByType(resultsByType) {
                   <p><strong>Place of Service:</strong> ${info["PlaceofService"] || "N/A"}</p>
                   <p><strong>Order:</strong> ${info["Order"] || "N/A"}</p>
                   <p><strong>Notes:</strong> ${info["Notes"] || "None"}</p>
+                  <p><strong>Date of birth:</strong> ${info["Dateofbirth"] || "None"}</p>
+                  <p><strong>Date of death:</strong> ${info["Dateofdeath"] || "None"}</p>
+
                 </div>
               </li>
             `;

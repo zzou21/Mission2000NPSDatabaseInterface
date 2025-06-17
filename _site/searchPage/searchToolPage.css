@@ -65,6 +65,11 @@ hr {
   color: #333;
 }
 
+/* Font for instructions for multi-select. */
+.multiSelectInstructions {
+  font-size: 10px;
+}
+
 /* Creating the grids that divides the search options on the search screen.*/
 #searchGrid {
   display: grid;

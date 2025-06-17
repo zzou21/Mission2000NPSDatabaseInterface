@@ -35,6 +35,26 @@ document.addEventListener("DOMContentLoaded", function () {
 (function () {
 let jsonData = [];
 
+function clearMultiSelect(selectId, pillDisplayId) {
+  const select = document.getElementById(selectId);
+  const display = document.getElementById(pillDisplayId);
+
+  if (select) {
+    Array.from(select.options).forEach(option => {
+      option.selected = false;
+    });
+
+    // Manually trigger change to update pills
+    const event = new Event('change', { bubbles: true });
+    select.dispatchEvent(event);
+  }
+
+  if (display) {
+    display.innerHTML = "";
+  }
+}
+
+
 function fetchData() {
   fetch('../dataProcessing/dataFiles/JSON/combinedData.json')
     .then(response => {
@@ -105,11 +125,28 @@ function searchByTribalAffiliation() {
   });
 
   renderResultsByPerson(groupedByYear);
+  clearMultiSelect("searchTribe", "selectedTribesDisplay")
 }
 
 function renderResultsByPerson(groupedByYear) {
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
+    const selectedPlaces = Array.from(document.getElementById("searchTribe").selectedOptions)
+    .map(opt => opt.value)
+    .join(", ") || "All Tribal Affiliations";
+
+  const yearInput = document.getElementById("searchYearTribeAffiliation").value.trim() || "All Years";
+
+  const description = document.createElement("div");
+  description.innerHTML = `<h3>Results for: <em>${selectedPlaces}</em> in <em>${yearInput}</em></h3>`;
+  resultsDiv.appendChild(description);
+
+
+  if (results.length === 0) {
+    resultsDiv.innerHTML = "<p>No events found for that tribal affiliation.</p>";
+    return;
+  }
+
 
   const sortedYears = Object.keys(groupedByYear).sort((a, b) => {
     const isNumA = /^\d{4}$/.test(a);
@@ -154,9 +191,8 @@ function renderResultsByPerson(groupedByYear) {
       const personDiv = document.createElement("div");
       personDiv.classList.add("result-item");
       personDiv.innerHTML = `
-        <span class="caret" onclick="toggleDetails('${personId}', this)">▸</span>
-        <strong>${relationship}</strong>: ${fullName}${title} <strong style="color:green;">(${tribe})</strong>
-        <div class="person-details" id="details-${personId}" style="display:none; margin-left:1em; font-size:0.9em;">
+        <h4>${relationship}: ${fullName}${title} <span style="color:green;">(${tribe})</span></h4>
+        <div style="margin-left:1em; font-size:0.9em; margin-bottom: 0.5em;">
           <p><strong>Sex:</strong> ${info["Sex"] || "N/A"}</p>
           <p><strong>Place of Birth:</strong> ${info["Placeofbirth"] || "N/A"}</p>
           <p><strong>Place of Death:</strong> ${info["Placeofdeath"] || "N/A"}</p>
@@ -166,8 +202,12 @@ function renderResultsByPerson(groupedByYear) {
           <p><strong>Place of Service:</strong> ${info["PlaceofService"] || "N/A"}</p>
           <p><strong>Order:</strong> ${info["Order"] || "N/A"}</p>
           <p><strong>Notes:</strong> ${info["Notes"] || "None"}</p>
+          <p><strong>Date of birth:</strong> ${info["Dateofbirth"] || "None"}</p>
+          <p><strong>Date of death:</strong> ${info["Dateofdeath"] || "None"}</p>
+
         </div>
       `;
+
 
       const eventDetails = document.createElement("ul");
       eventDetails.style.marginTop = "0.5em";
@@ -208,6 +248,8 @@ function renderResultsByPerson(groupedByYear) {
                   <p><strong>Place of Service:</strong> ${oInfo["PlaceofService"] || "N/A"}</p>
                   <p><strong>Order:</strong> ${oInfo["Order"] || "N/A"}</p>
                   <p><strong>Notes:</strong> ${oInfo["Notes"] || "None"}</p>
+                  <p><strong>Date of birth:</strong> ${info["Dateofbirth"] || "None"}</p>
+                  <p><strong>Date of death:</strong> ${info["Dateofdeath"] || "None"}</p>
                 </div>
               </details>
             `;
