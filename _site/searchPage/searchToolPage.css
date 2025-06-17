@@ -2,15 +2,17 @@ body {
     font-family: Arial, sans-serif;
 }
 
+/* For all h4 tagged words*/
 h4 {
-  font-size: 1rem;       /* You can go smaller if needed, e.g., 0.9rem or 14px */
+  font-size: 15px;       
   margin: 0 0 0.5em 0;   /* Top, right, bottom, left margins */
   padding: 0;            /* Remove any default padding */
-  line-height: 1.2;      /* Tighten line spacing */
+  line-height: 1.2;      
 }
 
+/* Height of all line breaks*/
 br {
-    line-height: 0.2;
+    line-height: 0.1;
 }
 
 #results {
@@ -19,8 +21,8 @@ br {
 
 .result-item {
     border: 1px solid #ccc;
-    padding: 2px;
-    margin-bottom: 2px;
+    padding: 1px;
+    margin-bottom: 1px;
 }
 
 .caret {
@@ -57,8 +59,8 @@ hr {
 /* For display pill to remind users which options from the dropdown search list they've selected during multi-select.*/
 .pill {
   display: inline-block;
-  padding: 5px 10px;
-  margin: 3px;
+  padding: 5px 5px;
+  margin: 2px;
   background-color: #e0e0e0;
   border-radius: 15px;
   font-size: 0.85em;
@@ -67,20 +69,20 @@ hr {
 
 /* Font for instructions for multi-select. */
 .multiSelectInstructions {
-  font-size: 10px;
+  font-size: 11px;
 }
 
 /* Creating the grids that divides the search options on the search screen.*/
 #searchGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 2 columns */
-  gap: 20px;
-  padding: 20px;
+  gap: 10px;
+  padding: 10px;
 }
 /* Creating the borderlines around each grid box that divides the search options on the search screen.*/
 .searchBox {
   border: 1px solid black;
-  padding: 15px;
+  padding: 10px;
   background-color: #f9f9f9;
   border-radius: 5px;
 }

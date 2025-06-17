@@ -2,3 +2,26 @@
 ---
 
 @import 'jekyll-theme-cayman';
+
+/* Reduce header banner padding */
+.page-header {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* Reduce space inside the title and tagline */
+.project-name {
+  font-size: 2rem;
+  margin-bottom: 0.2rem;
+}
+
+.project-tagline {
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+/* Remove extra spacing below the header */
+.main-content {
+  margin-top: 0 !important;
+  padding-top: 1rem; /* Optional: tweak spacing between header and body */
+}
