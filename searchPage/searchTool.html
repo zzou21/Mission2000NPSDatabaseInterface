@@ -550,6 +550,272 @@ permalink: /search-interface/
                 <button id="searchButtonTribeAffiliation">Search by Tribal Affiliation and/or Year</button>
             </div>
         </div>
+
+        <div class="searchBox">
+            <div id="combinedSearch">
+                <label>Search Option 5:<br></label>
+                <label for="combinedSearch">Select the search options that you prefer:</label>
+                <p>This search option combines the functions of all the previous four searches. All cells are optional. Query boxes that are left blank will be read as search for all of the respective attributes.</p>
+                <label for="combinedPlace">Event place: </label>
+                <div id="combinedSelectedEventPlaceDisplay" style="margin-bottom: 10px;"></div>
+                <select id="combinedPlace" multiple size="10">
+                    <option value="Arizpe">Arizpe</option>
+                    <option value="A little above Guevavi">A little above Guevavi</option>
+                    <option value="Aconchi">Aconchi</option>
+                    <option value="Agtun">Agtun</option>
+                    <option value="Agua Caliente">Agua Caliente</option>
+                    <option value="Aguas Calientes">Aguas Calientes</option>
+                    <option value="Alpera, Spain">Alpera, Spain</option>
+                    <option value="Altar">Altar</option>
+                    <option value="Alza">Alza</option>
+                    <option value="Arivaca">Arivaca</option>
+                    <option value="Arizona">Arizona</option>
+                    <option value="Ati">Ati</option>
+                    <option value="Auptutug on the Río Gila">Auptutug on the Río Gila</option>
+                    <option value="Aya, Gipuzkoa">Aya, Gipuzkoa</option>
+                    <option value="Aya, Gipuzkoa, España">Aya, Gipuzkoa, España</option>
+                    <option value="Babaquiburica buhvi">Babaquiburica buhvi</option>
+                    <option value="Babasaqui">Babasaqui</option>
+                    <option value="Babisi">Babisi</option>
+                    <option value="Babocomari">Babocomari</option>
+                    <option value="Babocomari y Haivani">Babocomari y Haivani</option>
+                    <option value="Baboquiburi">Baboquiburi</option>
+                    <option value="Bacanora">Bacanora</option>
+                    <option value="Bacanuchi">Bacanuchi</option>
+                    <option value="Bacarica">Bacarica</option>
+                    <option value="Bacoachi">Bacoachi</option>
+                    <option value="Baihcat">Baihcat</option>
+                    <option value="Baihcat y Babocomari">Baihcat y Babocomari</option>
+                    <option value="Balmaseda">Balmaseda</option>
+                    <option value="Basochuca">Basochuca</option>
+                    <option value="Bavisi">Bavisi</option>
+                    <option value="Between Pipiac and Guevavi">Between Pipiac and Guevavi</option>
+                    <option value="Between Santa Ana and Santa Marta">Between Santa Ana and Santa Marta</option>
+                    <option value="Bilbao">Bilbao</option>
+                    <option value="Buena Vista">Buena Vista</option>
+                    <option value="Busani">Busani</option>
+                    <option value="Caborca">Caborca</option>
+                    <option value="Magdalena">Magdalena</option>
+                    <option value="Calabazas">Calabazas</option>
+                    <option value="Casas Grandes">Casas Grandes</option>
+                    <option value="Castillo">Castillo</option>
+                    <option value="Cerro Colorado">Cerro Colorado</option>
+                    <option value="Chicago, Illinois">Chicago, Illinois</option>
+                    <option value="Chinapa">Chinapa</option>
+                    <option value="Chuchuqui">Chuchuqui</option>
+                    <option value="Cieneguilla">Cieneguilla</option>
+                    <option value="Ciengeguilla">Ciengeguilla</option>
+                    <option value="Ciiudad de Mexico">Ciiudad de Mexico</option>
+                    <option value="Ciudad de México">Ciudad de México</option>
+                    <option value="Ciéneguilla">Ciéneguilla</option>
+                    <option value="Cocóspera">Cocóspera</option>
+                    <option value="Comacavitcam">Comacavitcam</option>
+                    <option value="Compostela, Nayarit, Nueva España">Compostela, Nayarit, Nueva España</option>
+                    <option value="Corodéguachi">Corodéguachi</option>
+                    <option value="Cuatitlan">Cuatitlan</option>
+                    <option value="Cucurpe">Cucurpe</option>
+                    <option value="Cuieneguilla">Cuieneguilla</option>
+                    <option value="Cuituaboc (Cuituavo)">Cuituaboc (Cuituavo)</option>
+                    <option value="Cuituavo">Cuituavo</option>
+                    <option value="Culiacán">Culiacán</option>
+                    <option value="Cuquiárachi">Cuquiárachi</option>
+                    <option value="Cádiz">Cádiz</option>
+                    <option value="Donostia, Gipuzkoa, España">Donostia, Gipuzkoa, España</option>
+                    <option value="Dublin, Ireland">Dublin, Ireland</option>
+                    <option value="Durango, Nueva España">Durango, Nueva España</option>
+                    <option value="Durango, Vizcaya, España">Durango, Vizcaya, España</option>
+                    <option value="Elejabeitia">Elejabeitia</option>
+                    <option value="Elizondo">Elizondo</option>
+                    <option value="Elizondo, Nafaroa, España">Elizondo, Nafaroa, España</option>
+                    <option value="En el monte">En el monte</option>
+                    <option value="En el norte, at or near Arivaca">En el norte, at or near Arivaca</option>
+                    <option value="En la Campaña">En la Campaña</option>
+                    <option value="Florence, Arizona">Florence, Arizona</option>
+                    <option value="Fort McDowell">Fort McDowell</option>
+                    <option value="Fronteras">Fronteras</option>
+                    <option value="Gahcat">Gahcat</option>
+                    <option value="Gordejuela, Bizkaia, España">Gordejuela, Bizkaia, España</option>
+                    <option value="Guaymas">Guaymas</option>
+                    <option value="Guepavérachi">Guepavérachi</option>
+                    <option value="Guernica, Bizkaia, España">Guernica, Bizkaia, España</option>
+                    <option value="Guevavi">Guevavi</option>
+                    <option value="Gusutaqui">Gusutaqui</option>
+                    <option value="Hacienda de Bachimba">Hacienda de Bachimba</option>
+                    <option value="Haivani Mugvit">Haivani Mugvit</option>
+                    <option value="Haivani Mugvit and Tushonimo">Haivani Mugvit and Tushonimo</option>
+                    <option value="Hermita de Santa Ana de Arrancudia">Hermita de Santa Ana de Arrancudia</option>
+                    <option value="Hermosillo">Hermosillo</option>
+                    <option value="Hernani">Hernani</option>
+                    <option value="Hoarshin">Hoarshin</option>
+                    <option value="Horcasitas">Horcasitas</option>
+                    <option value="Huturi tuscam">Huturi tuscam</option>
+                    <option value="Jamaica">Jamaica</option>
+                    <option value="Janos">Janos</option>
+                    <option value="Janos/Fronteras">Janos/Fronteras</option>
+                    <option value="Julilmes, Chihujahua">Julilmes, Chihujahua</option>
+                    <option value="La Soledad">La Soledad</option>
+                    <option value="Lanestosa">Lanestosa</option>
+                    <option value="Larabezua, Bizkaia España">Larabezua, Bizkaia España</option>
+                    <option value="Larabezua, Bizkaia, España">Larabezua, Bizkaia, España</option>
+                    <option value="Lecaroz, Navarra, España">Lecaroz, Navarra, España</option>
+                    <option value="Los Ángeles, Puebla, México">Los Ángeles, Puebla, México</option>
+                    <option value="Madrid">Madrid</option>
+                    <option value="Madrid, España">Madrid, España</option>
+                    <option value="Metcalf">Metcalf</option>
+                    <option value="Mexico City">Mexico City</option>
+                    <option value="Mocorito">Mocorito</option>
+                    <option value="Morata del Conde">Morata del Conde</option>
+                    <option value="Motepore">Motepore</option>
+                    <option value="Moylough, Middle County, Ireland">Moylough, Middle County, Ireland</option>
+                    <option value="Mátape">Mátape</option>
+                    <option value="Nacosari">Nacosari</option>
+                    <option value="Nacosari-Basochuca">Nacosari-Basochuca</option>
+                    <option value="Near Arivaca">Near Arivaca</option>
+                    <option value="Near Santa Teresa">Near Santa Teresa</option>
+                    <option value="Nogales, Arizona">Nogales, Arizona</option>
+                    <option value="Nogales, Arizona/Sonora">Nogales, Arizona/Sonora</option>
+                    <option value="Notales, Arizona">Notales, Arizona</option>
+                    <option value="Obtuavo">Obtuavo</option>
+                    <option value="On the mountain above Ímuris">On the mountain above Ímuris</option>
+                    <option value="On the mountain near Átil">On the mountain near Átil</option>
+                    <option value="On the road between Cocóspera and Guevavi">On the road between Cocóspera and Guevavi</option>
+                    <option value="Opodepe">Opodepe</option>
+                    <option value="Oquitoa">Oquitoa</option>
+                    <option value="Oquitoa (pueblo)">Oquitoa (pueblo)</option>
+                    <option value="Oquitoa (realito)">Oquitoa (realito)</option>
+                    <option value="Palmillas">Palmillas</option>
+                    <option value="Pamplona, Navarra, España">Pamplona, Navarra, España</option>
+                    <option value="Papaguería">Papaguería</option>
+                    <option value="Phoenix">Phoenix</option>
+                    <option value="Phoenix, Arizona">Phoenix, Arizona</option>
+                    <option value="Pipiac">Pipiac</option>
+                    <option value="Pitic">Pitic</option>
+                    <option value="Pitic (Hermosillo)">Pitic (Hermosillo)</option>
+                    <option value="Pitic, on the road to Sópori">Pitic, on the road to Sópori</option>
+                    <option value="Piticai">Piticai</option>
+                    <option value="Pitiqui">Pitiqui</option>
+                    <option value="Pitiquito">Pitiquito</option>
+                    <option value="Port of Tumuossha of Tuvasig">Port of Tumuossha of Tuvasig</option>
+                    <option value="Presidio de San Mateo">Presidio de San Mateo</option>
+                    <option value="Presidio de Santa Cruz">Presidio de Santa Cruz</option>
+                    <option value="Presidio del Altar">Presidio del Altar</option>
+                    <option value="Quiburi">Quiburi</option>
+                    <option value="Quiquiburiturss">Quiquiburiturss</option>
+                    <option value="Raum">Raum</option>
+                    <option value="Rosemont Mining Camp">Rosemont Mining Camp</option>
+                    <option value="Río Gila">Río Gila</option>
+                    <option value="Saacum">Saacum</option>
+                    <option value="San Andres de Seug Bag">San Andres de Seug Bag</option>
+                    <option value="San Andres de Seug Bag y San Bismas de Seug Tuburs">San Andres de Seug Bag y San Bismas de Seug Tuburs</option>
+                    <option value="San Andrés y San Bismas">San Andrés y San Bismas</option>
+                    <option value="San Cayetano (Tumacácori)">San Cayetano (Tumacácori)</option>
+                    <option value="San Cayetano de Calabazas">San Cayetano de Calabazas</option>
+                    <option value="San Cayetano de Tumacácori">San Cayetano de Tumacácori</option>
+                    <option value="San Diego">San Diego</option>
+                    <option value="San Francisco">San Francisco</option>
+                    <option value="San Iago de Obtuavo">San Iago de Obtuavo</option>
+                    <option value="San Ignacio">San Ignacio</option>
+                    <option value="San Juan Bautista">San Juan Bautista</option>
+                    <option value="San Juan Capistrano">San Juan Capistrano</option>
+                    <option value="San Juan de Quiburi">San Juan de Quiburi</option>
+                    <option value="San Luis">San Luis</option>
+                    <option value="San Miguel de Sonoitac">San Miguel de Sonoitac</option>
+                    <option value="San Pablo de Baihcat">San Pablo de Baihcat</option>
+                    <option value="San Pedro">San Pedro</option>
+                    <option value="San Pedro de Hasohuvaibca">San Pedro de Hasohuvaibca</option>
+                    <option value="San Tadeo">San Tadeo</option>
+                    <option value="San Tadeo de Babocomari & Haivani">San Tadeo de Babocomari & Haivani</option>
+                    <option value="San Tadeo de Babocomaric">San Tadeo de Babocomaric</option>
+                    <option value="San Xavier del Bac">San Xavier del Bac</option>
+                    <option value="Santa Ana">Santa Ana</option>
+                    <option value="Santa Catalina de Agtun">Santa Catalina de Agtun</option>
+                    <option value="Santa Cruz">Santa Cruz</option>
+                    <option value="Santa Cruz de Babisi">Santa Cruz de Babisi</option>
+                    <option value="Santa Cruz de Haivani">Santa Cruz de Haivani</option>
+                    <option value="Santa Eulalia, Chihuahua">Santa Eulalia, Chihuahua</option>
+                    <option value="Santa Fe">Santa Fe</option>
+                    <option value="Santa Marta">Santa Marta</option>
+                    <option value="Santa Teresa">Santa Teresa</option>
+                    <option value="Saracachi">Saracachi</option>
+                    <option value="Saric">Saric</option>
+                    <option value="Saric-in Luis's house">Saric-in Luis's house</option>
+                    <option value="Sasabac">Sasabac</option>
+                    <option value="Scuovag">Scuovag</option>
+                    <option value="Seug Bag">Seug Bag</option>
+                    <option value="Seug Bag and Seug Tuburss">Seug Bag and Seug Tuburss</option>
+                    <option value="Sevilla">Sevilla</option>
+                    <option value="Sibuc">Sibuc</option>
+                    <option value="Solomonville">Solomonville</option>
+                    <option value="Sonoita en campo Americano">Sonoita en campo Americano</option>
+                    <option value="Sonoitac">Sonoitac</option>
+                    <option value="Sonoitac, estancia de">Sonoitac, estancia de</option>
+                    <option value="Spibah">Spibah</option>
+                    <option value="Stonssutag">Stonssutag</option>
+                    <option value="Suamca">Suamca</option>
+                    <option value="Supquituni">Supquituni</option>
+                    <option value="Sutagshon en el Río Gila">Sutagshon en el Río Gila</option>
+                    <option value="Svorssnag">Svorssnag</option>
+                    <option value="Sópori">Sópori</option>
+                    <option value="Tempe">Tempe</option>
+                    <option value="Terrenate">Terrenate</option>
+                    <option value="Territorio de Sobaipuri">Territorio de Sobaipuri</option>
+                    <option value="Tetuachi">Tetuachi</option>
+                    <option value="Toac">Toac</option>
+                    <option value="Toacuquita">Toacuquita</option>
+                    <option value="Tres Álamos">Tres Álamos</option>
+                    <option value="Tuash-ug and Haivani Mugvit on the Gila River">Tuash-ug and Haivani Mugvit on the Gila River</option>
+                    <option value="Tuash-ug on the Gila River">Tuash-ug on the Gila River</option>
+                    <option value="Tubac">Tubac</option>
+                    <option value="Tuburisai">Tuburisai</option>
+                    <option value="Tubutama">Tubutama</option>
+                    <option value="Tucson">Tucson</option>
+                    <option value="Tucubavia">Tucubavia</option>
+                    <option value="Tuhto">Tuhto</option>
+                    <option value="Tumacácori">Tumacácori</option>
+                    <option value="Tumacácori/San Xavier">Tumacácori/San Xavier</option>
+                    <option value="Tunssrap">Tunssrap</option>
+                    <option value="Tussonimo en el Río Gila">Tussonimo en el Río Gila</option>
+                    <option value="Tuurisai">Tuurisai</option>
+                    <option value="Tuvagsig junto a Tumsoha">Tuvagsig junto a Tumsoha</option>
+                    <option value="Uafcam">Uafcam</option>
+                    <option value="Ures">Ures</option>
+                    <option value="Valladolid, España">Valladolid, España</option>
+                    <option value="Vera Cruz">Vera Cruz</option>
+                    <option value="Veracruz">Veracruz</option>
+                    <option value="Villa de Sinaloa">Villa de Sinaloa</option>
+                    <option value="Villa de los Seris">Villa de los Seris</option>
+                    <option value="Villaro">Villaro</option>
+                    <option value="Villaro, Bizkaia, España">Villaro, Bizkaia, España</option>
+                    <option value="Villaro, Bizkaia, Spain">Villaro, Bizkaia, Spain</option>
+                    <option value="Western Rancherias">Western Rancherias</option>
+                    <option value="Xona">Xona</option>
+                    <option value="Yuma">Yuma</option>
+                    <option value="Zeánuri">Zeánuri</option>
+                    <option value="Átil">Átil</option>
+                    <option value="Ímuri">Ímuri</option>
+                    <option value="Ímuris">Ímuris</option>
+                    <option value="Ímuris, from las Palmillas">Ímuris, from las Palmillas</option>
+                    <option value="Ïmuris">Ïmuris</option>
+                </select>
+                <br>
+
+                <div id="combinedPersonAndYearSearch">
+                    <div class="search-box" id="combinedNameSearchBox">
+                        <p>Enter person name:</p>
+
+                        <label for="combinedFirstNameInput">First Name:</label><br>
+                        <input type="text" id="combinedFirstNameInput" placeholder="Enter first name"><br><br>
+
+                        <label for="combinedLastNameInput">Last Name:</label><br>
+                        <input type="text" id="combinedLastNameInput" placeholder="Enter last name"><br><br>
+                    </div>
+                </div>
+                
+
+
+                
+            </div>
+        </div>
     </div>
 
     <hr>
@@ -565,5 +831,6 @@ permalink: /search-interface/
     <script src="{{ 'searchPage/searchEventType.js' | relative_url }}"></script>
     <script src="{{ 'searchPage/searchTribe.js' | relative_url }}"></script>
     <script src="{{ 'searchPage/searchPersonName.js' | relative_url }}"></script>
+    <script src="{{ 'searchPage/combinedSearch.js' | relative_url }}"></script>
 </body>
 </html>
