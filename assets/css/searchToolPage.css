@@ -75,7 +75,7 @@ hr {
 /* Creating the grids that divides the search options on the search screen.*/
 #searchGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* autoadjust columns */
   gap: 10px;
   padding: 10px;
 }

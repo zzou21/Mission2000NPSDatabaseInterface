@@ -22,7 +22,7 @@ permalink: /search-interface/
         Search Option 2. Search by Person name and optionally filter by year. <br>
         Search Option 3. Search by Event Type (e.g. baptism events, marriage events, etc.) and optionally filter by year of the event. <br>
         Search Option 4. Search by a person's Tribal Affiliation and optionally filter by year of the event the person is associated with.<br>
-        Search option 5. (under development) combined search. </p>
+        Search Option 5. Combined search. </p>
 
     <div id="searchGrid">
         <div class="searchBox">
@@ -801,7 +801,8 @@ permalink: /search-interface/
 
                 <div id="combinedPersonAndYearSearch">
                     <div class="search-box" id="combinedNameSearchBox">
-                        <p>Enter person name:</p>
+                        <br>
+                        <p>Person name:</p>
 
                         <label for="combinedFirstNameInput">First Name:</label><br>
                         <input type="text" id="combinedFirstNameInput" placeholder="Enter first name"><br><br>
@@ -810,10 +811,235 @@ permalink: /search-interface/
                         <input type="text" id="combinedLastNameInput" placeholder="Enter last name"><br><br>
                     </div>
                 </div>
-                
 
+                <label>Select event type:</label>
+                <div id="combinedSelectedEventTypeDisplay" style="margin-bottom: 10px;"></div>
+                <select id="combinedSearchEventType" multiple size="10">
+                    <option value="Unknown">Event Type Unknown</option>
+                    <option value="Baptism">Baptism</option>
+                    <option value="Baptism/Confirmation">Baptism/Confirmation</option>
+                    <option value="Baptism/Marriage">Baptism/Marriage</option>
+                    <option value="Birth">Birth</option>
+                    <option value="Boarding List">Boarding List</option>
+                    <option value="Burial">Burial</option>
+                    <option value="Census">Census</option>
+                    <option value="Indictment">Indictment</option>
+                    <option value="Inspection of Troops">Inspection of Troops</option>
+                    <option value="Marriage">Marriage</option>
+                    <option value="Marriage License">Marriage License</option>
+                    <option value="Marriage Presentation">Marriage Presentation</option>
+                    <option value="Marriage presentation">Marriage presentation</option>
+                    <option value="Notation">Notation</option>
+                    <option value="Nuptial Benediction">Nuptial Benediction</option>
+                    <option value="Oath">Oath</option>
+                    <option value="Official Correspondence">Official Correspondence</option>
+                    <option value="Passenger List">Passenger List</option>
+                    <option value="Priest's Explanation of Pima Uprising">Priest's Explanation of Pima Uprising</option>
+                    <option value="Probate">Probate</option>
+                    <option value="Proof of Nobility">Proof of Nobility</option>
+                    <option value="Review of Troops">Review of Troops</option>
+                    <option value="Royal Appointment">Royal Appointment</option>
+                    <option value="Sentencing">Sentencing</option>
+                    <option value="Ship Manifest">Ship Manifest</option>
+                </select>
+                <br>
 
-                
+                <label>Select tribal affiliation:</label>
+                <div id="combinedSelectedTribesDisplay" style="margin-bottom: 10px;"></div>
+                <select id="combinedSearchTribe" multiple size="10">
+                    <option value="Unknown">Affiliation unknown</option>
+                    <option value="Andaluz">Andaluz</option>
+                    <option value="Anglo-American">Anglo-American</option>
+                    <option value="Apache">Apache</option>
+                    <option value="Apache (de jua)">Apache (de jua)</option>
+                    <option value="Apache en el lado de su madre">Apache en el lado de su madre</option>
+                    <option value="Apache/Pima">Apache/Pima</option>
+                    <option value="Apache/Yuma">Apache/Yuma</option>
+                    <option value="Austriaco">Austriaco</option>
+                    <option value="Austrico">Austrico</option>
+                    <option value="Baveriaco">Baveriaco</option>
+                    <option value="Belga">Belga</option>
+                    <option value="Bohemio">Bohemio</option>
+                    <option value="Bélgico">Bélgico</option>
+                    <option value="Castizo">Castizo</option>
+                    <option value="Catalana">Catalana</option>
+                    <option value="Catalán">Catalán</option>
+                    <option value="Catalán Criollo">Catalán Criollo</option>
+                    <option value="Cocomaricopa">Cocomaricopa</option>
+                    <option value="Comanche">Comanche</option>
+                    <option value="Coyota">Coyota</option>
+                    <option value="Coyote">Coyote</option>
+                    <option value="Coyotes">Coyotes</option>
+                    <option value="Crillola Española">Crillola Española</option>
+                    <option value="Criolla">Criolla</option>
+                    <option value="Criollo">Criollo</option>
+                    <option value="Criollo Español">Criollo Español</option>
+                    <option value="Criollo Vizcaino">Criollo Vizcaino</option>
+                    <option value="Cristiano Papago">Cristiano Papago</option>
+                    <option value="De Razon">De Razon</option>
+                    <option value="De Razón">De Razón</option>
+                    <option value="De Razón; Español">De Razón; Español</option>
+                    <option value="De rason">De rason</option>
+                    <option value="De razón">De razón</option>
+                    <option value="English">English</option>
+                    <option value="English; United States">English; United States</option>
+                    <option value="Englishman">Englishman</option>
+                    <option value="Español">Español</option>
+                    <option value="Español Criolla">Español Criolla</option>
+                    <option value="Español Criollo">Español Criollo</option>
+                    <option value="Español criolla">Español criolla</option>
+                    <option value="Español criollo">Español criollo</option>
+                    <option value="Español/Vizcaino Criollo">Español/Vizcaino Criollo</option>
+                    <option value="Español; Gachupín">Español; Gachupín</option>
+                    <option value="Español; Mulato">Español; Mulato</option>
+                    <option value="Española">Española</option>
+                    <option value="Española Criolla">Española Criolla</option>
+                    <option value="Española criolla">Española criolla</option>
+                    <option value="Española, de Razon">Española, de Razon</option>
+                    <option value="Española; Mestiza">Española; Mestiza</option>
+                    <option value="Españolito">Españolito</option>
+                    <option value="Eudeve">Eudeve</option>
+                    <option value="Extremeño">Extremeño</option>
+                    <option value="Father was Papago/ Mother was Yaqui">Father was Papago/ Mother was Yaqui</option>
+                    <option value="Frances">Frances</option>
+                    <option value="Francés">Francés</option>
+                    <option value="Gentil">Gentil</option>
+                    <option value="Guaymas India">Guaymas India</option>
+                    <option value="Guaymas Indian">Guaymas Indian</option>
+                    <option value="Guaymas Indio">Guaymas Indio</option>
+                    <option value="Hibernés">Hibernés</option>
+                    <option value="India">India</option>
+                    <option value="India Guaymas">India Guaymas</option>
+                    <option value="India Suma">India Suma</option>
+                    <option value="Indio">Indio</option>
+                    <option value="Indio Guaymas">Indio Guaymas</option>
+                    <option value="Indio Suma">Indio Suma</option>
+                    <option value="Indio de razón">Indio de razón</option>
+                    <option value="Indio, Soltera">Indio, Soltera</option>
+                    <option value="Indio/Yuma">Indio/Yuma</option>
+                    <option value="Indios">Indios</option>
+                    <option value="Italiano">Italiano</option>
+                    <option value="Jalchedon">Jalchedon</option>
+                    <option value="Jana">Jana</option>
+                    <option value="Jano">Jano</option>
+                    <option value="Janos">Janos</option>
+                    <option value="Janos Indian">Janos Indian</option>
+                    <option value="Janos Indio">Janos Indio</option>
+                    <option value="Loba">Loba</option>
+                    <option value="Lobo">Lobo</option>
+                    <option value="Mestiza">Mestiza</option>
+                    <option value="Mestizo">Mestizo</option>
+                    <option value="Mexican">Mexican</option>
+                    <option value="Mexicana">Mexicana</option>
+                    <option value="Mexicano">Mexicano</option>
+                    <option value="Montañez">Montañez</option>
+                    <option value="Moraviano">Moraviano</option>
+                    <option value="Morisco">Morisco</option>
+                    <option value="Mujer de razón">Mujer de razón</option>
+                    <option value="Mulata">Mulata</option>
+                    <option value="Mulata libre">Mulata libre</option>
+                    <option value="Mulato">Mulato</option>
+                    <option value="Mulato libre">Mulato libre</option>
+                    <option value="Negro">Negro</option>
+                    <option value="Nijora">Nijora</option>
+                    <option value="Nijora (Yavapai)">Nijora (Yavapai)</option>
+                    <option value="Nijora / Apache">Nijora / Apache</option>
+                    <option value="Nijora / Cajuenche">Nijora / Cajuenche</option>
+                    <option value="Nijora / Chichara / Papaga">Nijora / Chichara / Papaga</option>
+                    <option value="Nijora / Indio">Nijora / Indio</option>
+                    <option value="Nijora / Mestiza">Nijora / Mestiza</option>
+                    <option value="Nijora / Opata">Nijora / Opata</option>
+                    <option value="Nijora / Papago">Nijora / Papago</option>
+                    <option value="Nijora / Pima">Nijora / Pima</option>
+                    <option value="Nijora / Yaqui">Nijora / Yaqui</option>
+                    <option value="Nijora / Yuma">Nijora / Yuma</option>
+                    <option value="Nijora / Yuma / Papago">Nijora / Yuma / Papago</option>
+                    <option value="Nijora on the part of the father">Nijora on the part of the father</option>
+                    <option value="Nijora on the part of the mother">Nijora on the part of the mother</option>
+                    <option value="Opata">Opata</option>
+                    <option value="Opata on the part of the father">Opata on the part of the father</option>
+                    <option value="Opata, Natural">Opata, Natural</option>
+                    <option value="Opata/ Española">Opata/ Española</option>
+                    <option value="Opata/Pima">Opata/Pima</option>
+                    <option value="Opata/Yaqui">Opata/Yaqui</option>
+                    <option value="Pabab'ootam">Pabab'ootam</option>
+                    <option value="Papab'ootam">Papab'ootam</option>
+                    <option value="Papabi">Papabi</option>
+                    <option value="Papabo">Papabo</option>
+                    <option value="Papaga">Papaga</option>
+                    <option value="Papago">Papago</option>
+                    <option value="Papago del Monte">Papago del Monte</option>
+                    <option value="Papago, Agregada">Papago, Agregada</option>
+                    <option value="Papago/ Pima">Papago/ Pima</option>
+                    <option value="Papago/Pima">Papago/Pima</option>
+                    <option value="Papago/Yaqui">Papago/Yaqui</option>
+                    <option value="Papagos">Papagos</option>
+                    <option value="Pima">Pima</option>
+                    <option value="Pima Baja">Pima Baja</option>
+                    <option value="Pima Bajo">Pima Bajo</option>
+                    <option value="Pima Criolla">Pima Criolla</option>
+                    <option value="Pima Criollo">Pima Criollo</option>
+                    <option value="Pima of San Xavier">Pima of San Xavier</option>
+                    <option value="Pima/Apache">Pima/Apache</option>
+                    <option value="Pima/Opata">Pima/Opata</option>
+                    <option value="Pima/Papaga">Pima/Papaga</option>
+                    <option value="Pima/Papago">Pima/Papago</option>
+                    <option value="Pima/Yaqui">Pima/Yaqui</option>
+                    <option value="Razón">Razón</option>
+                    <option value="Romanian">Romanian</option>
+                    <option value="Salinero">Salinero</option>
+                    <option value="Sardo">Sardo</option>
+                    <option value="Seri">Seri</option>
+                    <option value="Siciliano">Siciliano</option>
+                    <option value="Sobaipuri">Sobaipuri</option>
+                    <option value="Sobaípuri">Sobaípuri</option>
+                    <option value="Suizo">Suizo</option>
+                    <option value="Suma">Suma</option>
+                    <option value="Tepoca">Tepoca</option>
+                    <option value="Tudesco">Tudesco</option>
+                    <option value="Ute">Ute</option>
+                    <option value="Valenciano">Valenciano</option>
+                    <option value="Viacaína criolla">Viacaína criolla</option>
+                    <option value="Vizcaina">Vizcaina</option>
+                    <option value="Vizcaina Criolla">Vizcaina Criolla</option>
+                    <option value="Vizcaino">Vizcaino</option>
+                    <option value="Vizcaino Criollo">Vizcaino Criollo</option>
+                    <option value="Vizcaino criollo">Vizcaino criollo</option>
+                    <option value="Vizcaína">Vizcaína</option>
+                    <option value="Vizcaína Criolla">Vizcaína Criolla</option>
+                    <option value="Vizcaína criolla">Vizcaína criolla</option>
+                    <option value="Vizcaína/Española Criolla">Vizcaína/Española Criolla</option>
+                    <option value="Vizcaíno">Vizcaíno</option>
+                    <option value="Vizcaíno Criollo">Vizcaíno Criollo</option>
+                    <option value="Vizcaíno/Español Criollo">Vizcaíno/Español Criollo</option>
+                    <option value="Vizcaíno;">Vizcaíno;</option>
+                    <option value="Vizcáina">Vizcáina</option>
+                    <option value="Vizcáino">Vizcáino</option>
+                    <option value="Vzcaíno">Vzcaíno</option>
+                    <option value="Yaqui">Yaqui</option>
+                    <option value="Yaqui coyote">Yaqui coyote</option>
+                    <option value="Yaqui del pueblo de Raum">Yaqui del pueblo de Raum</option>
+                    <option value="Yaqui y Opata">Yaqui y Opata</option>
+                    <option value="Yaqui/ Papago">Yaqui/ Papago</option>
+                    <option value="Yaqui/ Pima">Yaqui/ Pima</option>
+                    <option value="Yaqui/Apache">Yaqui/Apache</option>
+                    <option value="Yaqui/Pima">Yaqui/Pima</option>
+                    <option value="Yuma">Yuma</option>
+                    <option value="Yuma or Apache">Yuma or Apache</option>
+                    <option value="Yuma/Pima">Yuma/Pima</option>
+                    <option value="coyote">coyote</option>
+                    <option value="de Razon">de Razon</option>
+                    <option value="de Razon, Marido">de Razon, Marido</option>
+                    <option value="de Razón">de Razón</option>
+                    <option value="de Razón / Coyota">de Razón / Coyota</option>
+                </select>
+                <br>
+                <label for="combinedSearchYear">Enter Year:</label>
+                <input type="text" id="combinedSearchYear" placeholder="e.g., 1702" />
+                <br>
+                <br>
+                <button id="combinedSearchButton">Search by Any Attributes</button>
+
             </div>
         </div>
     </div>

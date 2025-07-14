@@ -1023,4 +1023,29 @@ a:hover {
   padding-top: 1rem; /* Optional: tweak spacing between header and body */
 }
 
+/* Override Cayman container width */
+.wrapper {
+  display: flex;
+  max-width: 1200px; /* wider page */
+  margin: 0 auto;
+  gap: 20px;
+}
+
+/* New left and right sidebars */
+.sidebar-left,
+.sidebar-right {
+  width: 200px;
+  flex-shrink: 0;
+  font-size: 0.9em;
+  color: #555;
+}
+
+/* Size of screen display */
+.main-content {
+  max-width: 95%;
+  margin: 0 auto;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
 /*# sourceMappingURL=style.css.map */
