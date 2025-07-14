@@ -13,6 +13,7 @@
       .catch(err => console.error("Failed to load JSON:", err));
   }
 
+  // Clears search input
   function clearSearchInputs(ids) {
     ids.forEach(id => {
       const el = document.getElementById(id);

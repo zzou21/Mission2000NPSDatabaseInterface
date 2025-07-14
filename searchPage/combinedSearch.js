@@ -19,6 +19,21 @@
     }
   }
 
+  //Function to create highlighting effect on matching word search
+  function highlightMatch(text, term) {
+    if (text == null || term == null) return text;
+    text = String(text)
+    term = String(term)
+
+    text = text.normalize("NFD").replace(/\p{Diacritic}/gu, "");
+    if (!text || !term) return text;
+    const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // escape regex
+    // Match term at the start of any word
+    const regex = new RegExp(`\\b(${escaped})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
+  }
+
+
   // Handle select-pill display for combined search
   ["combinedPlace", "combinedSearchEventType", "combinedSearchTribe"].forEach(selectId => {
     const select = document.getElementById(selectId);
@@ -70,7 +85,7 @@
   };
 
   // Render results grouped by year
-  function renderResults(results, yearCounts, searchSummary) {
+  function renderResults(results, yearCounts, searchSummary, highlightTerm, highlightMatchingID) {
     const resultsDiv = document.getElementById("results");
     resultsDiv.innerHTML = "";
 
@@ -123,12 +138,12 @@
         const div = document.createElement("div");
         div.classList.add("result-item");
         div.innerHTML = `
-          <h4>Event ID: ${event["EventID"]}</h4>
-          <p><strong>Place:</strong> ${event["EventPlace"] || "N/A"}</p>
+          <h4>Event ID: ${highlightMatch(event["EventID"], highlightMatchingID)}</h4>
+          <p><strong>Place:</strong> ${event["EventPlace"] || "None"}</p>
           <p><strong>Date:</strong> ${event["EventDate"] || "Unknown"}</p>
           <p><strong>Type:</strong> ${event["Event"] || "Unknown"}</p>
-          <p><strong>Book:</strong> ${event["Book"] || "N/A"}</p>
-          <p><strong>Notes:</strong> ${event["Notes"] || "None"}</p>
+          <p><strong>Book:</strong> ${event["Book"] || "None"}</p>
+          <p><strong>Notes:</strong> ${highlightMatch(event["Notes"] || "None", highlightTerm)}</p>
           <p><strong>Credit:</strong> ${event["Credit"] || "None"}</p>
         `;
 
@@ -143,15 +158,15 @@
             const personID = info["Personal_ID"];
             const details = `
               <div class="person-details" id="details-${id}" style="display:none; margin-left:1em; font-size:0.9em;">
-                <p><strong>Sex:</strong> ${info["Sex"] || "N/A"}</p>
-                <p><strong>Place of Birth:</strong> ${info["Placeofbirth"] || "N/A"}</p>
-                <p><strong>Place of Death:</strong> ${info["Placeofdeath"] || "N/A"}</p>
-                <p><strong>Residence:</strong> ${info["Residence"] || "N/A"}</p>
-                <p><strong>Race or Tribe:</strong> ${info["RaceorTribe"] || "N/A"}</p>
-                <p><strong>Title:</strong> ${info["Title"] || "N/A"}</p>
-                <p><strong>Place of Service:</strong> ${info["PlaceofService"] || "N/A"}</p>
-                <p><strong>Order:</strong> ${info["Order"] || "N/A"}</p>
-                <p><strong>Notes:</strong> ${info["Notes"] || "None"}</p>
+                <p><strong>Sex:</strong> ${info["Sex"] || "None"}</p>
+                <p><strong>Place of Birth:</strong> ${highlightMatch(info["Placeofbirth"] || "None", highlightTerm)}</p>
+                <p><strong>Place of Death:</strong> ${highlightMatch(info["Placeofdeath"] || "None", highlightTerm)}</p>
+                <p><strong>Residence:</strong> ${highlightMatch(info["Residence"] || "None", highlightTerm)}</p>
+                <p><strong>Race or Tribe:</strong> ${info["RaceorTribe"] || "None"}</p>
+                <p><strong>Title:</strong> ${highlightMatch(info["Title"] || "None", highlightTerm)}</p>
+                <p><strong>Place of Service:</strong> ${highlightMatch(info["PlaceofService"] || "None", highlightTerm)}</p>
+                <p><strong>Order:</strong> ${highlightMatch(info["Order"] || "None", highlightTerm)}</p>
+                <p><strong>Notes:</strong> ${highlightMatch(info["Notes"] || "None", highlightTerm)}</p>
                 <p><strong>Date of birth:</strong> ${info["Dateofbirth"] || "None"}</p>
                 <p><strong>Date of death:</strong> ${info["Dateofdeath"] || "None"}</p>
               </div>
@@ -160,7 +175,7 @@
               <li>
                 <span class="caret" onclick="toggleDetails('${id}', this)">▸</span>
                 <strong>${relationship}</strong>: ${fullName}${title} - 
-                <span style="font-weight: normal;">Person ID: ${personID}</span>
+                <span style="font-weight: normal;">Person ID: ${highlightMatch(personID, highlightMatchingID)}</span>
                 ${details}
               </li>
             `;
@@ -184,6 +199,11 @@
 
     const firstName = document.getElementById("combinedFirstNameInput").value.trim().toLowerCase();
     const lastName = document.getElementById("combinedLastNameInput").value.trim().toLowerCase();
+    const idInputRaw = document.getElementById("combinedIDSearchInput").value.trim();
+    const idToMatch = /^\d+$/.test(idInputRaw) ? parseInt(idInputRaw, 10) : null;
+    const generalWordRaw = document.getElementById("combinedGeneralWordSearchInput").value.trim();
+    const generalWord = generalWordRaw.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
+
     const yearInput = document.getElementById("combinedSearchYear").value.trim();
 
     const results = [];
@@ -215,6 +235,33 @@
         const tribe = (p.PersonInfo?.RaceorTribe || "").toLowerCase();
         return selectedTribes.includes(tribe);
       });
+
+      const isIDMatch = idToMatch !== null && (
+        item.EventID === idToMatch || 
+        (item.Person || []).some(p => 
+          p.Personal_ID === idToMatch || 
+          p.PersonInfo?.Personal_ID === idToMatch
+        )
+      );
+
+      const generalWordMatchInEvent = (item.Notes || "").toLowerCase()
+        .normalize("NFD").replace(/\p{Diacritic}/gu, "")
+        .split(/\s+/).some(word => word.startsWith(generalWord));
+
+      const generalWordMatchInPerson = (item.Person || []).some(p => {
+        const info = p.PersonInfo || {};
+        const fieldsToCheck = [
+          info.Title, info.Placeofbirth, info.Placeofdeath, info.Causeofdeath,
+          info.Residence, info.PlaceofService, info.Translation,
+          info.BurialPlace, info.Order, info.Notes
+        ];
+        return fieldsToCheck.some(val =>
+          (val || "").toLowerCase()
+            .normalize("NFD").replace(/\p{Diacritic}/gu, "")
+            .split(/\s+/).some(word => word.startsWith(generalWord))
+        );
+      });
+
       const matchYear = !yearInput || year === yearInput;
       const matchName = (item.Person || []).some(p => {
         const info = p.PersonInfo || {};
@@ -223,7 +270,15 @@
         return (!firstName || g.includes(firstName)) && (!lastName || s.includes(lastName));
       });
 
-      if (matchPlace && matchType && matchTribe && matchYear && matchName) {
+      if (
+        (selectedPlaces.length === 0 || matchPlace) &&
+        (selectedEventTypes.length === 0 || matchType) &&
+        (selectedTribes.length === 0 || matchTribe) &&
+        (!yearInput || matchYear) &&
+        (!firstName && !lastName || matchName) &&
+        (!idToMatch || isIDMatch) &&
+        (!generalWord || generalWordMatchInEvent || generalWordMatchInPerson)
+      ){
         yearCounts[year] = (yearCounts[year] || 0) + 1;
         results.push(item);
       }
@@ -241,7 +296,7 @@
     const readableTribe = selectedTribes.length > 0 ? selectedTribes.join(", ") : "All Tribal Affiliations";
     const readableYear = yearInput || "All Years";
     const readableName = (firstName || lastName) 
-    ? `people named ${[firstName, lastName].filter(Boolean).join(" ")}`
+    ? `${[firstName, lastName].filter(Boolean).join(" ")}`
     : "any person";
 
     // Compose HTML summary
@@ -252,9 +307,11 @@
     <p><strong>Tribal Affiliation:</strong> ${readableTribe}</p>
     <p><strong>Name:</strong> ${readableName}</p>
     <p><strong>Year:</strong> ${readableYear}</p>
+    <p><strong>Search by ID:</strong> ${idInputRaw || "None"}</p>
+    <p><strong>General Word:</strong> ${generalWordRaw || "None"}</p>
     `;
 
-    renderResults(results, yearCounts, searchSummary);
+    renderResults(results, yearCounts, searchSummary, generalWord, idToMatch);
 
     // Optionally clear UI after search
     clearMultiSelect("combinedPlace", "combinedSelectedEventPlaceDisplay");
