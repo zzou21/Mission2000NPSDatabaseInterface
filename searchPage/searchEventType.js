@@ -124,7 +124,18 @@ function renderResultsByType(resultsByType) {
   const description = document.createElement("div");
   description.innerHTML = `<h3>Results for: <em>${selectedPlaces}</em> in <em>${yearInput}</em></h3>`;
   resultsDiv.appendChild(description);
+  
+  // Count total number of events
+  let totalCount = 0;
+  Object.values(resultsByType).forEach(yearMap => {
+    Object.values(yearMap).forEach(events => {
+      totalCount += events.length;
+    });
+  });
 
+  const totalDiv = document.createElement("div");
+  totalDiv.innerHTML = `<p><strong>Total Results:</strong> ${totalCount}</p>`;
+  resultsDiv.appendChild(totalDiv);
 
   if (results.length === 0) {
     resultsDiv.innerHTML = "<p>No events found for that event type.</p>";
@@ -195,11 +206,12 @@ function renderResultsByType(resultsByType) {
             const relationship = p["Relationship"] || "Unknown Role";
             const title = info["Title"] ? ` (${info["Title"]})` : "";
             const id = `${event["EventID"]}-${year}-${i}`;
+            const personID = info["Personal_ID"] || "Unknown";
 
             return `
               <li>
                 <span class="caret" onclick="toggleDetails('${id}', this)">▸</span>
-                <strong>${relationship}</strong>: ${fullName}${title}
+                <strong>${relationship}</strong>: ${fullName}${title} — <span style="font-weight: normal;">Person ID: ${personID}</span>
                 <div class="person-details" id="details-${id}" style="display:none; margin-left:1em; font-size:0.9em;">
                   <p><strong>Sex:</strong> ${info["Sex"] || "N/A"}</p>
                   <p><strong>Place of Birth:</strong> ${info["Placeofbirth"] || "N/A"}</p>

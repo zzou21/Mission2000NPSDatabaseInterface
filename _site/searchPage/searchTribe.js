@@ -140,7 +140,15 @@ function renderResultsByPerson(groupedByYear) {
   const description = document.createElement("div");
   description.innerHTML = `<h3>Results for: <em>${selectedPlaces}</em> in <em>${yearInput}</em></h3>`;
   resultsDiv.appendChild(description);
+  // Count total number of people across all years
+  let totalCount = 0;
+  Object.values(groupedByYear).forEach(entries => {
+    totalCount += entries.length;
+  });
 
+  const totalDiv = document.createElement("div");
+  totalDiv.innerHTML = `<p><strong>Total Results:</strong> ${totalCount} person(s)</p>`;
+  resultsDiv.appendChild(totalDiv);
 
   if (results.length === 0) {
     resultsDiv.innerHTML = "<p>No events found for that tribal affiliation.</p>";
@@ -186,13 +194,13 @@ function renderResultsByPerson(groupedByYear) {
       const tribe = info["RaceorTribe"] || "Unknown";
       const relationship = p["Relationship"] || "Unknown Role";
       const title = info["Title"] ? ` (${info["Title"]})` : "";
-      const personId = `${year}-${index}`;
+      const personId = p["Personal_ID"];
 
       const personDiv = document.createElement("div");
       personDiv.classList.add("result-item");
       personDiv.innerHTML = `
-        <h4>${relationship}: ${fullName}${title} <span style="color:green;">(${tribe})</span></h4>
-        <div style="margin-left:1em; font-size:0.9em; margin-bottom: 0.5em;">
+        <h4>${relationship}: ${fullName}${title} — <span style="font-weight: normal;">Person ID: ${personId}</span></h4>
+        <div style="margin-left:1em; font-size:0.9em;">
           <p><strong>Sex:</strong> ${info["Sex"] || "N/A"}</p>
           <p><strong>Place of Birth:</strong> ${info["Placeofbirth"] || "N/A"}</p>
           <p><strong>Place of Death:</strong> ${info["Placeofdeath"] || "N/A"}</p>
@@ -204,10 +212,8 @@ function renderResultsByPerson(groupedByYear) {
           <p><strong>Notes:</strong> ${info["Notes"] || "None"}</p>
           <p><strong>Date of birth:</strong> ${info["Dateofbirth"] || "None"}</p>
           <p><strong>Date of death:</strong> ${info["Dateofdeath"] || "None"}</p>
-
         </div>
       `;
-
 
       const eventDetails = document.createElement("ul");
       eventDetails.style.marginTop = "0.5em";
@@ -234,10 +240,13 @@ function renderResultsByPerson(groupedByYear) {
             const oName = [oInfo["Givenname"], oInfo["Surname"]].filter(Boolean).join(" ") || "Unknown Name";
             const oRole = other["Relationship"] || "Unknown Role";
             const oTribe = oInfo["RaceorTribe"] || "Unknown";
-
+            const oID = oInfo.Personal_ID || "Unknown";
             return `
-              <details style="margin-top: 0.25em; margin-left: 1em;">
-                <summary><strong>${oRole}</strong>: ${oName} (${oTribe})</summary>
+              <details style="margin-left: 1em; margin-top: 2px; margin-bottom: 2px; line-height: 1.2;">
+                <summary>
+                  <strong>${oRole}</strong>: ${oName} (${oTribe}) — 
+                  <span style="font-weight: normal;">Person ID: ${oID}</span>
+                </summary>
                 <div style="font-size: 0.85em; margin-left: 1em;">
                   <p><strong>Sex:</strong> ${oInfo["Sex"] || "N/A"}</p>
                   <p><strong>Place of Birth:</strong> ${oInfo["Placeofbirth"] || "N/A"}</p>
@@ -248,8 +257,8 @@ function renderResultsByPerson(groupedByYear) {
                   <p><strong>Place of Service:</strong> ${oInfo["PlaceofService"] || "N/A"}</p>
                   <p><strong>Order:</strong> ${oInfo["Order"] || "N/A"}</p>
                   <p><strong>Notes:</strong> ${oInfo["Notes"] || "None"}</p>
-                  <p><strong>Date of birth:</strong> ${info["Dateofbirth"] || "None"}</p>
-                  <p><strong>Date of death:</strong> ${info["Dateofdeath"] || "None"}</p>
+                  <p><strong>Date of birth:</strong> ${oInfo["Dateofbirth"] || "None"}</p>
+                  <p><strong>Date of death:</strong> ${oInfo["Dateofdeath"] || "None"}</p>
                 </div>
               </details>
             `;

@@ -390,8 +390,6 @@
                 <br>
                 <br>
                 <button id="searchButtonEventType">Search by Event Type and/or Year</button>
-
-
             </div>
         </div>
 
@@ -1090,10 +1088,22 @@
 
             </div>
         </div>
+        
+        <div class="searchBox">
+            <div id="IDSearch">
+                <label>Search Option 6:<br></label>
+                <label for="IDSearch">Search by Event or Person ID :</label>
+                <p>This search allows users to search by the ID number assigned to each event or person in the database. Events and people in the database use the same numeric system. In other words, one number could only be assigned to either an event or a person, not both.</p>
+                <label for="IDSearchInput">Enter Event or Person ID:</label><br>
+                <input type="text" id="IDSearchInput" placeholder="Enter ID...">
+                <br>
+                <br>
+                <button id="IDSearchButton">Search by ID</button>
+            </div>
+        </div>
+
     </div>
-
     <hr>
-
     <p>Search result: </p>
     <br>
     <br>
@@ -1101,11 +1111,14 @@
 
     </div>
 
+    <!-- Each search option has a JavaScript file. Load the JavaScript files here: -->
     <script src="/searchPage/searchEventPlace.js"></script>
     <script src="/searchPage/searchEventType.js"></script>
     <script src="/searchPage/searchTribe.js"></script>
     <script src="/searchPage/searchPersonName.js"></script>
     <script src="/searchPage/combinedSearch.js"></script>
+    <script src="/searchPage/IDSearch.js"></script>
+
 </body>
 </html>
 

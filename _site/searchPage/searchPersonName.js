@@ -27,19 +27,16 @@
       return;
     }
 
-    // Raw input values (for display)
     const firstNameRaw = document.getElementById("firstNameInput").value.trim();
     const lastNameRaw = document.getElementById("lastNameInput").value.trim();
     const yearRaw = document.getElementById("searchNameYear").value.trim();
 
-    // Normalized input values (for matching)
     const firstNameInput = firstNameRaw.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
     const lastNameInput = lastNameRaw.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
 
     const resultsDiv = document.getElementById("results");
     resultsDiv.innerHTML = "";
 
-    // Description section
     const displayFirst = firstNameRaw || "(any)";
     const displayLast = lastNameRaw || "(any)";
     const displayYear = yearRaw || "(any year)";
@@ -85,7 +82,6 @@
       return;
     }
 
-    // Add total results summary
     const summary = document.createElement("div");
     summary.innerHTML = `<h4>Total Results: ${matchedResults.length}</h4>`;
     resultsDiv.appendChild(summary);
@@ -97,12 +93,13 @@
 
       const fullName = [info["Givenname"], info["Surname"]].filter(Boolean).join(" ") || "Unknown Name";
       const title = info["Title"] ? ` (${info["Title"]})` : "";
+      const personID = info["Personal_ID"] || "Unknown";
 
       const personDiv = document.createElement("div");
       personDiv.classList.add("result-item");
 
       personDiv.innerHTML = `
-        <h4>Result ${index + 1}: ${fullName}${title}</h4>
+        <h4>Result ${index + 1}: ${fullName}${title} &mdash; <span style="font-weight:normal;">Person ID: ${personID} | Event ID: ${event["EventID"]}</span></h4>
         <p><strong>Relationship:</strong> ${p["Relationship"] || "N/A"}</p>
       `;
 
@@ -129,7 +126,8 @@
         <summary><strong>Event:</strong> ${event["Event"] || "Unknown"} | 
                 <strong>Date:</strong> ${event["EventDate"] || "Unknown"} | 
                 <strong>Place:</strong> ${event["EventPlace"] || "N/A"} | 
-                <strong>Book:</strong> ${event["Book"] || "N/A"}</summary>
+                <strong>Book:</strong> ${event["Book"] || "N/A"} | 
+                <strong>Event ID:</strong> ${event["EventID"]}</summary>
         <div style="margin-left: 1em; font-size: 0.95em;">
           <p><strong>Credit:</strong> ${event["Credit"] || "None"}</p>
         </div>
@@ -142,10 +140,11 @@
           const oName = [oInfo.Givenname, oInfo.Surname].filter(Boolean).join(" ") || "Unknown Name";
           const oRole = other.Relationship || "Unknown Role";
           const oTribe = oInfo.RaceorTribe || "Unknown";
+          const oID = oInfo.Personal_ID || "Unknown";
 
           return `
             <details style="margin-top: 0.5em; margin-left: 1em;">
-              <summary><strong>${oRole}</strong>: ${oName} (${oTribe})</summary>
+              <summary><strong>${oRole}</strong>: ${oName} (${oTribe}) — <span style="font-weight:normal;">Person ID: ${oID}</span></summary>
               <div style="margin-left: 1em; font-size: 0.9em;">
                 <p><strong>Sex:</strong> ${oInfo.Sex || "N/A"}</p>
                 <p><strong>Place of Birth:</strong> ${oInfo.Placeofbirth || "N/A"}</p>
@@ -173,9 +172,9 @@
       resultsDiv.appendChild(personDiv);
     });
 
-    // Clear search inputs after displaying results
     clearSearchInputs(["firstNameInput", "lastNameInput", "searchNameYear"]);
   }
+
 
   document.getElementById("searchByNameButton").addEventListener("click", searchByName);
   document.getElementById("searchByNameButton").disabled = true;
