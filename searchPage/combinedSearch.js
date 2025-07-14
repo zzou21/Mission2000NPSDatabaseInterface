@@ -254,7 +254,6 @@
     <p><strong>Year:</strong> ${readableYear}</p>
     `;
 
-
     renderResults(results, yearCounts, searchSummary);
 
     // Optionally clear UI after search

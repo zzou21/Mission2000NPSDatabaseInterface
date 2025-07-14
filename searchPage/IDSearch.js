@@ -1,3 +1,4 @@
+// Search by event or person ID
 (function () {
   let jsonData = [];
 
@@ -102,7 +103,8 @@
         <p><strong>Event Type:</strong> ${event.Event || "Unknown"} | 
            <strong>Date:</strong> ${event.EventDate || "Unknown"} | 
            <strong>Place:</strong> ${event.EventPlace || "N/A"} | 
-           <strong>Year:</strong> ${year}</p>
+           <strong>Year:</strong> ${year} | 
+           <strong>Event ID:</strong> ${event.EventID}</p>
         <p><strong>Book:</strong> ${event.Book || "N/A"} | 
            <strong>Page:</strong> ${event.PageNumber || "N/A"}</p>
         <p><strong>Notes:</strong> ${event.Notes || "None"}</p>
@@ -115,12 +117,16 @@
         const role = person.Relationship || "Unknown Role";
         const title = info.Title ? ` (${info.Title})` : "";
         const isMatch = info.Personal_ID === idToFind;
-
+        const personID = info.Personal_ID;
         const detailStyle = isMatch ? "background-color: #ffffe0; border-left: 3px solid orange;" : "";
 
         return `
           <details style="margin-left: 1em; margin-top: 1em; ${detailStyle}">
-            <summary><strong>${role}:</strong> ${fullName}${title}${isMatch ? " <em>(ID match)</em>" : ""}</summary>
+            <summary>
+            <strong>${role}:</strong> ${fullName}${title} — 
+            <span style="font-weight:normal;">Person ID: ${personID}</span>
+            ${isMatch ? " <em>(ID match)</em>" : ""}
+            </summary>
             <div style="margin-left: 1em; font-size: 0.9em;">
               <p><strong>Sex:</strong> ${info.Sex || "N/A"}</p>
               <p><strong>Place of Birth:</strong> ${info.Placeofbirth || "N/A"}</p>
