@@ -30,7 +30,6 @@
     });
   }
 
-
   function searchByGeneralWord() {
     const rawInput = document.getElementById("generalWordSearchInput").value.trim();
     const input = rawInput.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
